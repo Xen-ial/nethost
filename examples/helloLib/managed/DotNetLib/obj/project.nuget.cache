@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "DGiZ/m8y9dw=",
+  "success": true,
+  "projectFilePath": "/home/xenial/repos/cpp/libraries/catalyst/examples/helloLib/managed/DotNetLib/DotNetLib.csproj",
+  "expectedPackageFiles": [
+    "/home/xenial/.nuget/packages/microsoft.aspnetcore.app.ref/10.0.12/microsoft.aspnetcore.app.ref.10.0.12.nupkg.sha512"
+  ],
+  "logs": []
+}

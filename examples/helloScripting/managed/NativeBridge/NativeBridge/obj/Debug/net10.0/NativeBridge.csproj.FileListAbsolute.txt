@@ -1,0 +1,15 @@
+/home/xenial/repos/cpp/libraries/catalyst/examples/helloScripting/managed/NativeBridge/NativeBridge/bin/Debug/net10.0/NativeBridge.deps.json
+/home/xenial/repos/cpp/libraries/catalyst/examples/helloScripting/managed/NativeBridge/NativeBridge/bin/Debug/net10.0/NativeBridge.dll
+/home/xenial/repos/cpp/libraries/catalyst/examples/helloScripting/managed/NativeBridge/NativeBridge/bin/Debug/net10.0/NativeBridge.pdb
+/home/xenial/repos/cpp/libraries/catalyst/examples/helloScripting/managed/NativeBridge/NativeBridge/obj/Debug/net10.0/NativeBridge.GeneratedMSBuildEditorConfig.editorconfig
+/home/xenial/repos/cpp/libraries/catalyst/examples/helloScripting/managed/NativeBridge/NativeBridge/obj/Debug/net10.0/NativeBridge.AssemblyInfoInputs.cache
+/home/xenial/repos/cpp/libraries/catalyst/examples/helloScripting/managed/NativeBridge/NativeBridge/obj/Debug/net10.0/NativeBridge.AssemblyInfo.cs
+/home/xenial/repos/cpp/libraries/catalyst/examples/helloScripting/managed/NativeBridge/NativeBridge/obj/Debug/net10.0/NativeBridge.csproj.CoreCompileInputs.cache
+/home/xenial/repos/cpp/libraries/catalyst/examples/helloScripting/managed/NativeBridge/NativeBridge/obj/Debug/net10.0/NativeBridge.dll
+/home/xenial/repos/cpp/libraries/catalyst/examples/helloScripting/managed/NativeBridge/NativeBridge/obj/Debug/net10.0/refint/NativeBridge.dll
+/home/xenial/repos/cpp/libraries/catalyst/examples/helloScripting/managed/NativeBridge/NativeBridge/obj/Debug/net10.0/NativeBridge.pdb
+/home/xenial/repos/cpp/libraries/catalyst/examples/helloScripting/managed/NativeBridge/NativeBridge/obj/Debug/net10.0/ref/NativeBridge.dll
+/home/xenial/repos/cpp/libraries/catalyst/examples/helloScripting/managed/NativeBridge/NativeBridge/bin/Debug/net10.0/EngineAPI.dll
+/home/xenial/repos/cpp/libraries/catalyst/examples/helloScripting/managed/NativeBridge/NativeBridge/bin/Debug/net10.0/EngineAPI.pdb
+/home/xenial/repos/cpp/libraries/catalyst/examples/helloScripting/managed/NativeBridge/NativeBridge/obj/Debug/net10.0/NativeBridge.csproj.AssemblyReference.cache
+/home/xenial/repos/cpp/libraries/catalyst/examples/helloScripting/managed/NativeBridge/NativeBridge/obj/Debug/net10.0/NativeBr.06FF1CA7.Up2Date

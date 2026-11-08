@@ -1,0 +1,11 @@
+/home/xenial/repos/cpp/libraries/catalyst/examples/helloScripting/managed/EngineAPI/EngineAPI/bin/Debug/net10.0/EngineAPI.deps.json
+/home/xenial/repos/cpp/libraries/catalyst/examples/helloScripting/managed/EngineAPI/EngineAPI/bin/Debug/net10.0/EngineAPI.dll
+/home/xenial/repos/cpp/libraries/catalyst/examples/helloScripting/managed/EngineAPI/EngineAPI/bin/Debug/net10.0/EngineAPI.pdb
+/home/xenial/repos/cpp/libraries/catalyst/examples/helloScripting/managed/EngineAPI/EngineAPI/obj/Debug/net10.0/EngineAPI.GeneratedMSBuildEditorConfig.editorconfig
+/home/xenial/repos/cpp/libraries/catalyst/examples/helloScripting/managed/EngineAPI/EngineAPI/obj/Debug/net10.0/EngineAPI.AssemblyInfoInputs.cache
+/home/xenial/repos/cpp/libraries/catalyst/examples/helloScripting/managed/EngineAPI/EngineAPI/obj/Debug/net10.0/EngineAPI.AssemblyInfo.cs
+/home/xenial/repos/cpp/libraries/catalyst/examples/helloScripting/managed/EngineAPI/EngineAPI/obj/Debug/net10.0/EngineAPI.csproj.CoreCompileInputs.cache
+/home/xenial/repos/cpp/libraries/catalyst/examples/helloScripting/managed/EngineAPI/EngineAPI/obj/Debug/net10.0/EngineAPI.dll
+/home/xenial/repos/cpp/libraries/catalyst/examples/helloScripting/managed/EngineAPI/EngineAPI/obj/Debug/net10.0/refint/EngineAPI.dll
+/home/xenial/repos/cpp/libraries/catalyst/examples/helloScripting/managed/EngineAPI/EngineAPI/obj/Debug/net10.0/EngineAPI.pdb
+/home/xenial/repos/cpp/libraries/catalyst/examples/helloScripting/managed/EngineAPI/EngineAPI/obj/Debug/net10.0/ref/EngineAPI.dll
