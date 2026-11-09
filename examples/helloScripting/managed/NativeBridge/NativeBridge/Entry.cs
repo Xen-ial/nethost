@@ -1,5 +1,6 @@
 using System.Runtime.InteropServices;
 using System.Runtime.Loader;
+using EngineAPI.Native;
 
 namespace NativeBridge;
 
@@ -40,5 +41,11 @@ public static class Entry
 		}
 
 		return 1;
+	}
+
+	[UnmanagedCallersOnly]
+	public static void Initialize(IntPtr testCallPtr)
+	{
+		EngineAPI.Native.NativeBridge.InitalizeHostCallbacks(testCallPtr);
 	}
 }

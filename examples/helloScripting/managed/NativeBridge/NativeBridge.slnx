@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="../EngineAPI/EngineAPI/EngineAPI.csproj" />
   <Project Path="NativeBridge/NativeBridge.csproj" />
 </Solution>
