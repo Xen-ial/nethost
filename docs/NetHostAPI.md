@@ -3,7 +3,6 @@
 ## Overview
 
 This document will be going over the details for `/nethost/include/nethost/Assembly.h` and `/nethost/include/nethost/NetHostApp.h`  
-As these are the most important parts of NetHost.  
 
 ## NetHostApp
 
@@ -98,7 +97,7 @@ GetFunctionPointerFunc   getFunction() const;
 
 Assembly gives you direct access for resolving and calling function pointers from C#.  
 
-> NOTE `BorrowedRef<T>` is an alias for (`std::reference_wrapper<T>`)
+> Note `BorrowedRef<T>` is an alias for (`std::reference_wrapper<T>`)
 
 ```cpp
 Assembly(BorrowedRef<NetHostApp> nethostApp, const std::string& assemblyPath, std::string libName);
