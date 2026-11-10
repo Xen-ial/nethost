@@ -44,8 +44,9 @@ public static class Entry
 	}
 
 	[UnmanagedCallersOnly]
-	public static void Initialize(IntPtr testCallPtr)
+	public static int Initialize(IntPtr nativeFuncPtrs)
 	{
-		EngineAPI.Native.NativeBridge.InitalizeHostCallbacks(testCallPtr);
+		NativeFuncPointers funcPtrs = Marshal.PtrToStructure<NativeFuncPointers>(nativeFuncPtrs);
+		return EngineAPI.Native.NativeBridge.InitalizeHostCallbacks(funcPtrs);
 	}
 }

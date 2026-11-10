@@ -5,11 +5,17 @@
 #include <print>
 #include <optional>
 
-using EmptyVoid    = void(NETHOST_DELEGATE_CALLTYPE*)();
-using LoadAssembly = unsigned char(NETHOST_DELEGATE_CALLTYPE*)(const char*);
+using EmptyVoid              = void(NETHOST_DELEGATE_CALLTYPE*)();
+using LoadAssembly           = unsigned char(NETHOST_DELEGATE_CALLTYPE*)(const char*);
+using InitializeNativeBridge = int(NETHOST_DELEGATE_CALLTYPE*)(void* initTestCall);
 
 namespace
 {
+	void NETHOST_CDECL testCall()
+	{
+		std::println("Called Test");
+	}
+
 	class MyApp
 	{
 	public:
@@ -77,13 +83,30 @@ namespace
 
 		LoadAssembly m_loadAssembly = nullptr;
 
+		InitializeNativeBridge m_initNativeBridge = nullptr;
+
+		struct FuncPointers
+		{
+			void* pTestCall = nullptr;
+		};
+
 		bool init()
 		{
 			if (!m_app.isInititalized())
 				return false;
 
 			m_nativeBridge.emplace(m_app, "NativeBridge.dll", "NativeBridge");
-			return loadFunctions();
+			bool success = loadFunctions();
+
+			if (!success)
+				return false;
+
+			FuncPointers funcPtrs{
+			    .pTestCall = reinterpret_cast<void*>(&testCall)};
+
+			success   = m_initNativeBridge(&funcPtrs) == 0;
+
+			return success;
 		}
 
 		bool loadFunctions()
@@ -114,7 +137,16 @@ namespace
 
 			if (m_loadAssembly == nullptr)
 			{
-				std::println("Failed to load assembly ptr");
+				std::println("Failed to resolve LoadAssembly ptr");
+				return false;
+			}
+
+			m_initNativeBridge = m_nativeBridge->getFunc<InitializeNativeBridge>(
+			    "Initialize", "NativeBridge", "Entry");
+
+			if (m_initNativeBridge == nullptr)
+			{
+				std::println("Failed to resolve Initialize ptr");
 				return false;
 			}
 

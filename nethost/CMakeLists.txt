@@ -16,6 +16,6 @@ target_include_directories(nethost
         ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-target_link_libraries(nethost PUBLIC
+target_link_libraries(nethost PRIVATE
         dotnet::nethost
 )

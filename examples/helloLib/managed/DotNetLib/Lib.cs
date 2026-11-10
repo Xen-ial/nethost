@@ -1,20 +1,18 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace DotNetLib
+namespace DotNetLib;
+
+public static class Lib
 {
-    public static class Lib
-    {
-        private static byte _isWaiting = 0;
+	private static byte _isWaiting = 0;
 
-        [UnmanagedCallersOnly]
-        public static void Main()
-        {
-            Console.WriteLine("Hello World!");
+	[UnmanagedCallersOnly]
+	public static void Main()
+	{
+		Console.WriteLine("Hello World!");
+		_isWaiting = 1;
+	}
 
-            _isWaiting = 1;
-        }
-
-        [UnmanagedCallersOnly]
-        public static byte IsWaiting() => _isWaiting;
-    }
+	[UnmanagedCallersOnly]
+	public static byte IsWaiting() => _isWaiting;
 }

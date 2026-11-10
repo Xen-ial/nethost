@@ -30,12 +30,15 @@ int main(int argc, const char* argv[])
 	}
 
 	auto isWaitingValue = isWaiting();
-	std::println("IsWaiting: {}", isWaitingValue);
+	std::println("IsWaiting: {}", isWaitingValue == 1);
 
 	mainEntry();
 
 	isWaitingValue = isWaiting();
-	std::println("IsWaiting: {}", isWaitingValue);
+	std::println("IsWaiting: {}", isWaitingValue == 1);
+
+	if (isWaitingValue != 1)
+		std::println("isWaiting value has returned false");
 
 	helloWorldApp.shutdown();
 	return 0;
