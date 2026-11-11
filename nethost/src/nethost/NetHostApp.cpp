@@ -80,6 +80,21 @@ namespace nethost
 
 		result = m_getRuntimeDelegate(
 		    m_hostContext,
+		    hdt_load_assembly_bytes,
+		    &lib);
+
+		if (result != 0 || lib == nullptr)
+		{
+			std::println("failed to resolve (loadAssemblyBytes) pointer");
+			return false;
+		}
+
+		m_loadAssemblyBytes = reinterpret_cast<LoadAssemblyBytesFunc>(lib);
+		if (m_loadAssemblyBytes == nullptr)
+			return false;
+
+		result = m_getRuntimeDelegate(
+		    m_hostContext,
 		    hdt_get_function_pointer,
 		    &lib);
 
@@ -98,7 +113,7 @@ namespace nethost
 
 	Func NetHostApp::getFunc(const std::string& name, const std::string& nameSpace, const std::string& targetClass, const std::string& targetLib) const
 	{
-		auto getFunction = this->getFunction();
+		auto getFunction = this->m_getFunctionPointer;
 
 		void* function = nullptr;
 		int   result   = getFunction(
@@ -117,7 +132,7 @@ namespace nethost
 
 	void NetHostApp::getFuncDelegate(void** delegate, const std::string& name, const std::string& nameSpace, const std::string& targetClass, const std::string& targetLib)
 	{
-		auto getFunction = this->getFunction();
+		auto getFunction = this->m_getFunctionPointer;
 
 		int result = getFunction(
 		    std::format("{}.{}, {}", nameSpace, targetClass, targetLib).c_str(),
@@ -129,5 +144,35 @@ namespace nethost
 
 		if (result != 0 || delegate == nullptr)
 			delegate = nullptr;
+	}
+
+	bool NetHostApp::initForRuntimeConfig(const char* runtimeConfigPath, const struct hostfxr_initialize_parameters* parameters)
+	{
+		int success = m_initForRuntimeConfig(runtimeConfigPath, parameters, &m_hostContext);
+		return success == 0;
+	}
+
+	bool NetHostApp::getRuntimeDelegate(int hostFXRDelegateType, void* pData)
+	{
+		int success = m_getRuntimeDelegate(m_hostContext, hostFXRDelegateType, &pData);
+		return success == 0;
+	}
+
+	bool NetHostApp::closeApp()
+	{
+		int success = m_close(m_hostContext);
+		return success == 0;
+	}
+
+	bool NetHostApp::loadAssembly(const char* path, void* loadContext, void* reserved)
+	{
+		int success = m_loadAssembly(path, loadContext, reserved);
+		return success != 0;
+	}
+
+	bool NetHostApp::loadAssembly(const std::vector<std::byte>& assembly, const std::vector<std::byte>& symbols, void* loadContext, void* reserved)
+	{
+		int success = m_loadAssemblyBytes(assembly.data(), assembly.size(), symbols.data(), symbols.size(), loadContext, reserved);
+		return success != 0;
 	}
 } // namespace nethost
