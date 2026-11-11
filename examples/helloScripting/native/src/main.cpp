@@ -26,7 +26,6 @@ namespace
 		MyApp& operator=(MyApp&&) = delete;
 
 		MyApp()
-		    : m_app("Default.runtimeconfig.json")
 		{
 			if (!init())
 				throw std::runtime_error("MyApp failed to initialize");

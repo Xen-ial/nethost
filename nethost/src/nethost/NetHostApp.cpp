@@ -10,11 +10,29 @@
 #include <dlfcn.h>
 #include <cassert>
 #include <print>
+#include <fstream>
+#include <format>
+#include <filesystem>
 
 namespace
 {
-	constexpr std::uint32_t MAX_PATH = 260;
+	constexpr std::uint32_t MAX_PATH               = 260;
+	const std::string       DEFAULT_RUNTIME_CONFIG = R"(
+{
+  "runtimeOptions": {
+    "tfm": "net10.0",
+    "rollForward": "LatestMinor",
+    "framework": {
+      "name": "Microsoft.NETCore.App",
+      "version": "10.0.0"
+    },
+    "configProperties": {
+      "System.Runtime.Serialization.EnableUnsafeBinaryFormatterSerialization": false
+    }
+  }
 }
+)";
+} // namespace
 
 namespace nethost
 {
@@ -22,10 +40,34 @@ namespace nethost
 	    : m_isInitialized(loadHostFXR(runtimeConfigPath))
 	{
 		if (!m_isInitialized)
-		{
 			std::println("failed to load host FXR");
+	}
+
+	NetHostApp::NetHostApp()
+	{
+		std::ofstream defaultRuntime("Default.runtimeconfig.json");
+		if (!defaultRuntime.is_open())
+		{
+			std::println("failed to create default runtime config.");
+			m_isInitialized = false;
 			return;
 		}
+
+		defaultRuntime << DEFAULT_RUNTIME_CONFIG;
+		defaultRuntime.close();
+
+		bool hostFXR = loadHostFXR("Default.runtimeconfig.json");
+		if (!hostFXR)
+		{
+			std::println("failed to load host FXR");
+			m_isInitialized = false;
+			return;
+		}
+
+		std::filesystem::path defaultRuntimeConfigpath = "Default.runtimeconfig.json";
+		std::filesystem::remove(defaultRuntimeConfigpath);
+
+		m_isInitialized = true;
 	}
 
 	void NetHostApp::shutdown()

@@ -38,6 +38,8 @@ namespace nethost
 		NetHostApp& operator=(NetHostApp&&) = default;
 
 		NetHostApp(const std::string& runtimeConfigPath);
+		NetHostApp();
+
 		~NetHostApp() = default;
 
 		void shutdown();
