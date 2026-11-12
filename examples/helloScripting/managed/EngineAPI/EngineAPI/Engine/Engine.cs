@@ -7,9 +7,4 @@ public class Engine
 	public Engine()
 	{
 	}
-
-	public void Test()
-	{
-		NativeBridge.TestCall();
-	}
 }

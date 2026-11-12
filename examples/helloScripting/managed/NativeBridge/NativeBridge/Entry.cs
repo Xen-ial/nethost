@@ -1,5 +1,6 @@
 using System.Runtime.InteropServices;
 using System.Runtime.Loader;
+using EngineAPI.Engine;
 using EngineAPI.Native;
 
 namespace NativeBridge;
@@ -25,8 +26,6 @@ public static class Entry
 	[UnmanagedCallersOnly]
 	public static unsafe byte LoadAssembly(byte* pathBytes)
 	{
-		Console.WriteLine("Loading Assembly");
-
 		try
 		{
 			var path = Marshal.PtrToStringUTF8((IntPtr)pathBytes);
@@ -48,5 +47,29 @@ public static class Entry
 	{
 		NativeFuncPointers funcPtrs = Marshal.PtrToStructure<NativeFuncPointers>(nativeFuncPtrs);
 		return EngineAPI.Native.NativeBridge.InitalizeHostCallbacks(funcPtrs);
+	}
+
+	[UnmanagedCallersOnly]
+	public static void CreateEntity(int id)
+	{
+		EngineAPI.Native.NativeBridge.CreateEntity(id);
+	}
+
+	[UnmanagedCallersOnly]
+	public static void DestroyEntity(int id)
+	{
+		EngineAPI.Native.NativeBridge.DestroyEntity(id);
+	}
+
+	[UnmanagedCallersOnly]
+	public static void PrintAllEntities()
+	{
+		EngineAPI.Native.NativeBridge.PrintAllEntities();
+	}
+
+	[UnmanagedCallersOnly]
+	public static void UpdateScripts()
+	{
+        EngineAPI.Native.NativeBridge.UpdateScripts();
 	}
 }

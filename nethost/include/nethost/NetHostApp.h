@@ -1,29 +1,13 @@
 #pragma once
+#include <nethost/Utils.h>
+
 #include <cstddef>
 #include <string>
 #include <vector>
 
-#if defined(_WIN32)
-#define NETHOST_DELEGATE_CALLTYPE __stdcall
-#else
-#define NETHOST_DELEGATE_CALLTYPE
-#endif
-
-#if defined(_MSC_VER)
-#define NETHOST_CDECL __cdecl
-#elif defined(__GNUC__) || defined(__clang__)
-#if defined(__i386__)
-#define NETHOST_CDECL __attribute__((cdecl))
-#else
-#define NETHOST_CDECL
-#endif
-#else
-#define NETHOST_CDECL
-#endif
-
 namespace nethost
 {
-	using Func        = int (*)(void*, int);
+	using Func        = int(NETHOST_DELEGATE_CALLTYPE*)(void*, int);
 	using HostContext = void*;
 
 	class Assembly;
@@ -63,12 +47,12 @@ namespace nethost
 		[[nodiscard]] HostContext getHostContext() const { return m_hostContext; }
 
 	private:
-		using InitForRuntimeConfigFunc = int (*)(const char*, const struct hostfxr_initialize_parameters*, void**);
-		using GetRuntimeDelegateFunc   = int (*)(void* const, int hostfxr_delegate_type, void**);
-		using CloseFunc                = int (*)(void* const);
-		using LoadAssemblyFunc         = int (*)(const char*, void*, void*);
-		using LoadAssemblyBytesFunc    = int (*)(const void*, unsigned long, const void*, unsigned long, void*, void*);
-		using GetFunctionPointerFunc   = int (*)(const char*, const char*, const char*, void*, void*, void**);
+		using InitForRuntimeConfigFunc = int(NETHOST_DELEGATE_CALLTYPE*)(const char*, const struct hostfxr_initialize_parameters*, void**);
+		using GetRuntimeDelegateFunc   = int(NETHOST_DELEGATE_CALLTYPE*)(void* const, int hostfxr_delegate_type, void**);
+		using CloseFunc                = int(NETHOST_DELEGATE_CALLTYPE*)(void* const);
+		using LoadAssemblyFunc         = int(NETHOST_DELEGATE_CALLTYPE*)(const char*, void*, void*);
+		using LoadAssemblyBytesFunc    = int(NETHOST_DELEGATE_CALLTYPE*)(const void*, unsigned long, const void*, unsigned long, void*, void*);
+		using GetFunctionPointerFunc   = int(NETHOST_DELEGATE_CALLTYPE*)(const char*, const char*, const char*, void*, void*, void**);
 
 		HostContext m_hostContext = nullptr;
 
