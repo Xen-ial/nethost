@@ -2,7 +2,7 @@
 
 ## Overview
 
-NetHost is an .net host CLR wrapper, meant to make integrating scripting more simple.  
+NetHost is a lightweight .net host CLR wrapper, meant to make integrating scripting more simple.  
 This project uses C++23, CMake, and targets .net 10 with examples.  
 
 NetHost supplies a simplified light wrapper around nethost native. While providing simple CMake integrations, for both Windows & Linux.  
@@ -31,3 +31,11 @@ With a simulated game loop to show the details of embedding and interacting with
 ## Docs
 
 To view and read the public API for NetHost in detail visit `/docs/GettingStarted.md` then follow the initial setup guide, and view the API at `/docs/NetHostAPI.md`
+
+## RoadMap
+
+- Finish the build pipeline for examples (auto move files, etc.)
+- Finish helloScripting example
+- Write proper tests
+- Add windows support
+- Update documentation

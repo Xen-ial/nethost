@@ -1,5 +1,8 @@
+#include "nethost/ErrorCodes.h"
 #include <nethost/Assembly.h>
 #include <nethost/NetClass.h>
+
+#include <nethost/Log.h>
 
 #include <print>
 #include <format>
@@ -14,7 +17,7 @@ namespace nethost
 
 		if (!result)
 		{
-			std::println("failed to load assembly: {}", assemblyPath);
+			err::logln(std::format("failed to load assembly {}", assemblyPath), err::StatusCode::CORE_CLR_RESOLVE_FAILURE);
 			return;
 		}
 
@@ -29,7 +32,7 @@ namespace nethost
 
 		if (!result)
 		{
-			std::println("failed to load assembly: {}", libName);
+			err::logln(std::format("failed to load assembly: {}", libName), err::StatusCode::CORE_CLR_RESOLVE_FAILURE);
 			return;
 		}
 
@@ -40,7 +43,7 @@ namespace nethost
 	{
 		if (!m_hasLoaded)
 		{
-			std::println("Failed to get func for unloaded assembly: {}", m_libName);
+			err::logln(std::format("Failed to get func for unloaded assembly: {}", m_libName), err::StatusCode::CORE_CLR_RESOLVE_FAILURE);
 			return nullptr;
 		}
 

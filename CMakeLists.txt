@@ -10,7 +10,17 @@ if (NOT CMAKE_GENERATOR STREQUAL "Ninja Multi-Config")
     message(FATAL_ERROR "Please use Ninja Multi-Config generator")
 endif ()
 
+option(NETHOST_BUILD_EXAMPLES "Builds NetHost examples." OFF)
+option(NETHOST_BUILD_SCRIPTING_EXTENSION "Builds sharphost extension." OFF)
+
 project(DotNetHost)
 
 add_subdirectory(nethost)
-add_subdirectory(examples)
+
+if (NETHOST_BUILD_EXAMPLES)
+    add_subdirectory(examples)
+endif ()
+
+if (NETHOST_BUILD_SCRIPTING_EXTENSION)
+    add_subdirectory(sharphost)
+endif()

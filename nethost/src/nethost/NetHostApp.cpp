@@ -1,5 +1,7 @@
+#include "nethost/ErrorCodes.h"
 #include <nethost/NetHostApp.h>
 #include <nethost/Utils.h>
+#include <nethost/Log.h>
 
 #include <nethost.h>
 #include <coreclr_delegates.h>
@@ -40,7 +42,7 @@ namespace nethost
 	    : m_isInitialized(loadHostFXR(runtimeConfigPath))
 	{
 		if (!m_isInitialized)
-			std::println("failed to load host FXR");
+			err::logln("failed to load host FXR", err::StatusCode::HOST_INVALID_STATE);
 	}
 
 	NetHostApp::NetHostApp()
@@ -48,7 +50,7 @@ namespace nethost
 		std::ofstream defaultRuntime("Default.runtimeconfig.json");
 		if (!defaultRuntime.is_open())
 		{
-			std::println("failed to create default runtime config.");
+			err::logln("failed to create default runtime config.", err::StatusCode::INVALID_CONFIG_FILE);
 			m_isInitialized = false;
 			return;
 		}
@@ -59,7 +61,7 @@ namespace nethost
 		bool hostFXR = loadHostFXR("Default.runtimeconfig.json");
 		if (!hostFXR)
 		{
-			std::println("failed to load host FXR");
+			err::logln("failed to load host FXR", err::StatusCode::HOST_INVALID_STATE);
 			m_isInitialized = false;
 			return;
 		}
@@ -100,7 +102,7 @@ namespace nethost
 
 		if (result != 0 || m_hostContext == nullptr)
 		{
-			std::println("failed to initialize");
+			err::logln("failed to initialize", err::fromFXR(result));
 			m_close(m_hostContext);
 			return false;
 		}
@@ -112,7 +114,7 @@ namespace nethost
 
 		if (result != 0 || lib == nullptr)
 		{
-			std::println("failed to resolve (loadAssembly) pointer");
+			err::logln("failed to resolve (loadAssembly) pointer", err::fromFXR(result));
 			return false;
 		}
 
@@ -127,7 +129,7 @@ namespace nethost
 
 		if (result != 0 || lib == nullptr)
 		{
-			std::println("failed to resolve (loadAssemblyBytes) pointer");
+			err::logln("failed to resolve (loadAssemblyBytes) pointer", err::fromFXR(result));
 			return false;
 		}
 
@@ -142,7 +144,7 @@ namespace nethost
 
 		if (result != 0 || lib == nullptr)
 		{
-			std::println("failed to resolve (getFunction)");
+			err::logln("failed to resolve (getFunction)", err::fromFXR(result));
 			return false;
 		}
 

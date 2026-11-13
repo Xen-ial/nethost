@@ -1,6 +1,8 @@
 #pragma once
+#include "nethost/ErrorCodes.h"
 #include <nethost/NetHostApp.h>
 #include <nethost/Utils.h>
+#include <nethost/Log.h>
 
 #include <string>
 #include <print>
@@ -24,7 +26,7 @@ namespace nethost
 
 			if (!host.isInititalized())
 			{
-				std::println("Failed to get func for unloaded assembly: {}", m_libName);
+				err::logln((std::format("failed to get func for unloaded assembly {}", m_libName)), err::StatusCode::CORE_CLR_RESOLVE_FAILURE);
 				return nullptr;
 			}
 
