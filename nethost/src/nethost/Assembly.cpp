@@ -1,4 +1,5 @@
 #include <nethost/Assembly.h>
+#include <nethost/NetClass.h>
 
 #include <print>
 #include <format>
@@ -43,12 +44,13 @@ namespace nethost
 			return nullptr;
 		}
 
-		auto netHost = m_nethost.get();
+		auto& netHost = m_nethost.get();
 		auto func    = netHost.getFunc(methodName, nameSpace, targetClass, m_libName);
-
-		if (func == nullptr)
-			return nullptr;
-
 		return func;
+	}
+
+	NetClass Assembly::getNetClass(std::string nameSpace, std::string className)
+	{
+		return std::move(NetClass(m_nethost, m_libName, std::move(nameSpace), std::move(className)));
 	}
 } // namespace nethost

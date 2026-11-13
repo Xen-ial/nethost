@@ -58,6 +58,14 @@ public class Entity(int entityId)
 		return script as T;
 	}
 
+	public void AddScript(Script script)
+	{
+		if (!_scripts.Contains(script))
+			_scripts.Add(script);
+
+		script.Owner = this;
+	}
+
 	public void AddScript<T>() where T : Script, new()
 	{
 		var script = GetScript<T>();
@@ -68,7 +76,7 @@ public class Entity(int entityId)
 		script.Owner = this;
 	}
 
-	public void AddScript<T>(T script) where T : Script, new()
+	public void AddScript<T>(T script) where T : Script
 	{
 		if (!_scripts.Contains(script))
 			_scripts.Add(script);

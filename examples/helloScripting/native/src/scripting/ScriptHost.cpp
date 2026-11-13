@@ -75,6 +75,14 @@ namespace scripting
 		m_nativeBridge->updateScripts();
 	}
 
+	void ScriptHost::addScript(int entityId, std::string scriptName)
+	{
+		if (!m_nativeBridge.has_value() || !m_nativeBridge->hasAssemblyLoaded())
+			return;
+
+		m_nativeBridge->addScript(entityId, scriptName);
+	}
+
 	bool ScriptHost::init()
 	{
 		m_nativeBridge.emplace(m_nethostApp);
@@ -87,4 +95,5 @@ namespace scripting
 		// m_nativeBridge->forwardFunctions(funcInfo);
 		return true;
 	}
+
 } // namespace scripting

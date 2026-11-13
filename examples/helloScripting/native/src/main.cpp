@@ -5,10 +5,6 @@
 
 #include <print>
 
-// TODO: Create Engine/Game Loop (Simulated)
-// TODO: Create actual Engine API examples
-// TODO: Create Entity's with attached script references, entities are C++ owned
-// TODO: Create Update/OnGUI/Resize/etc events for the scripting interface to consume
 // TODO: Link ECS system with Scripting system
 
 int main(int argc, const char* argv[])

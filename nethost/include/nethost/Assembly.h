@@ -1,5 +1,6 @@
 #pragma once
 #include <nethost/NetHostApp.h>
+#include <nethost/NetClass.h>
 #include <nethost/Utils.h>
 
 #include <cstddef>
@@ -26,7 +27,7 @@ namespace nethost
 				return nullptr;
 			}
 
-			auto host = m_nethost.get();
+			auto& host = m_nethost.get();
 
 			T delegate = nullptr;
 			host.getFuncDelegate(reinterpret_cast<void**>(&delegate), methodName, nameSpace, targetClass, m_libName);
@@ -34,7 +35,10 @@ namespace nethost
 			return delegate;
 		}
 
-		[[nodiscard]] bool hasAssemblyLoaded() const { return m_hasLoaded; }
+		NetClass getNetClass(std::string nameSpace, std::string className);
+
+		[[nodiscard]] bool        hasAssemblyLoaded() const { return m_hasLoaded; }
+		[[nodiscard]] std::string getLibName() const { return m_libName; }
 
 	private:
 		BorrowedRef<NetHostApp> m_nethost;
@@ -43,4 +47,5 @@ namespace nethost
 
 		std::string m_libName;
 	};
+
 } // namespace nethost

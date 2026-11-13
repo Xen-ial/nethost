@@ -21,6 +21,9 @@
 
 namespace nethost
 {
+	using Func        = int(NETHOST_DELEGATE_CALLTYPE*)(void*, int);
+	using HostContext = void*;
+
 	template <class T>
 	using BorrowedRef = std::reference_wrapper<T>;
 

@@ -27,6 +27,8 @@ namespace scripting
 		void printAllEntities();
 		void updateScripts();
 
+		void addScript(int entityId, std::string scriptName);
+
 	private:
 		nethost::NetHostApp         m_nethostApp;
 		std::optional<NativeBridge> m_nativeBridge;

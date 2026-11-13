@@ -13,7 +13,7 @@ public static class Entry
 	public static void CreateScriptingDomain()
 	{
 		Console.WriteLine("Created Domain");
-		_scriptingDomain = new AssemblyLoadContext("ScriptingDomain", isCollectible: true);
+		_scriptingDomain = new AssemblyLoadContext("ExampleEngineDomain", isCollectible: true);
 	}
 
 	[UnmanagedCallersOnly]
@@ -70,6 +70,25 @@ public static class Entry
 	[UnmanagedCallersOnly]
 	public static void UpdateScripts()
 	{
-        EngineAPI.Native.NativeBridge.UpdateScripts();
+		EngineAPI.Native.NativeBridge.UpdateScripts();
+	}
+
+	[UnmanagedCallersOnly]
+	public static void AddScript(int entityId, IntPtr scriptName)
+	{
+		var entity = EngineAPI.Native.NativeBridge.GetEntity(entityId);
+		if (entity == null)
+		{
+			Console.WriteLine("Entity is null");
+			return;
+		}
+
+		if (_scriptingDomain == null)
+		{
+			Console.WriteLine("Scripting Domain is not created can not resolve scripts.");
+			return;
+		}
+
+		EngineAPI.Native.NativeBridge.AddScript(scriptName, entity, [.. _scriptingDomain.Assemblies]);
 	}
 }

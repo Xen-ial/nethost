@@ -25,53 +25,61 @@ namespace scripting
 
 	void NativeBridge::loadFunctions()
 	{
-		m_createScriptingDomain = m_libNativeBridge.getFunc<EmptyVoid>(
-		    "CreateScriptingDomain", "NativeBridge", "Entry");
+		auto entryClass = m_libNativeBridge.getNetClass("NativeBridge", "Entry");
+
+		m_createScriptingDomain = entryClass.getFunc<EmptyVoid>(
+		    "CreateScriptingDomain");
 
 		if (m_createScriptingDomain == nullptr)
 			throw std::runtime_error("NativeHost: Missing function CreateScriptingDomain().");
 
-		m_destroyScriptingDomain = m_libNativeBridge.getFunc<EmptyVoid>(
-		    "DestroyScriptingDomain", "NativeBridge", "Entry");
+		m_destroyScriptingDomain = entryClass.getFunc<EmptyVoid>(
+		    "DestroyScriptingDomain");
 
 		if (m_destroyScriptingDomain == nullptr)
 			throw std::runtime_error("NativeHost: Missing function DestroyScriptingDomain().");
 
-		m_loadAssembly = m_libNativeBridge.getFunc<LoadAssembly>(
-		    "LoadAssembly", "NativeBridge", "Entry");
+		m_loadAssembly = entryClass.getFunc<LoadAssembly>(
+		    "LoadAssembly");
 
 		if (m_loadAssembly == nullptr)
 			throw std::runtime_error("NativeHost: Missing function LoadAssembly().");
 
-		m_initNativeBridge = m_libNativeBridge.getFunc<InitializeNativeBridge>(
-		    "Initialize", "NativeBridge", "Entry");
+		m_initNativeBridge = entryClass.getFunc<InitializeNativeBridge>(
+		    "Initialize");
 
 		if (m_initNativeBridge == nullptr)
 			throw std::runtime_error("NativeHost: Missing function InitNativeBridge().");
 
-		m_createEntity = m_libNativeBridge.getFunc<CreateEntity>(
-		    "CreateEntity", "NativeBridge", "Entry");
+		m_createEntity = entryClass.getFunc<CreateEntity>(
+		    "CreateEntity");
 
 		if (m_createEntity == nullptr)
 			throw std::runtime_error("NativeHost: Missing function CreateEntity");
 
-		m_destroyEntity = m_libNativeBridge.getFunc<DestroyEntity>(
-		    "DestroyEntity", "NativeBridge", "Entry");
+		m_destroyEntity = entryClass.getFunc<DestroyEntity>(
+		    "DestroyEntity");
 
 		if (m_destroyEntity == nullptr)
 			throw std::runtime_error("NativeHost: Missing function DestroyEntity");
 
-		m_printAllEntities = m_libNativeBridge.getFunc<EmptyVoid>(
-		    "PrintAllEntities", "NativeBridge", "Entry");
+		m_printAllEntities = entryClass.getFunc<EmptyVoid>(
+		    "PrintAllEntities");
 
 		if (m_printAllEntities == nullptr)
 			throw std::runtime_error("NativeHost: Missing function PrintAllEntities");
 
-		m_updateScripts = m_libNativeBridge.getFunc<EmptyVoid>(
-		    "UpdateScripts", "NativeBridge", "Entry");
+		m_updateScripts = entryClass.getFunc<EmptyVoid>(
+		    "UpdateScripts");
 
 		if (m_updateScripts == nullptr)
 			throw std::runtime_error("NativeHost: Missing function UpdateScripts");
+
+		m_addScript = entryClass.getFunc<AddScript>(
+		    "AddScript");
+
+		if (m_addScript == nullptr)
+			throw std::runtime_error("NativeHost: Missing function AddScript()");
 
 		m_hasResolvedFNS = true;
 	}
@@ -148,5 +156,13 @@ namespace scripting
 			throw std::runtime_error("NativeHost: Assembly is not initialized.");
 
 		m_updateScripts();
+	}
+
+	void NativeBridge::addScript(int entityId, std::string& scriptName)
+	{
+		if (!hasAssemblyLoaded())
+			throw std::runtime_error("NativeHost: Assembly is not initialized.");
+
+		m_addScript(entityId, scriptName.c_str());
 	}
 } // namespace scripting

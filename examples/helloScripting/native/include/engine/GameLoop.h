@@ -31,7 +31,8 @@ namespace engine
 		void removeNetComponent(const std::string& compName);
 		void removeNetScript(const std::string& scrName);
 
-		[[nodiscard]] int entId() const { return m_eId; }
+		[[nodiscard]] int                             entId() const { return m_eId; }
+		[[nodiscard]] std::unordered_set<std::string> getNetScripts() const { return m_netScripts; }
 
 	private:
 		int m_eId;

@@ -7,10 +7,8 @@
 
 namespace nethost
 {
-	using Func        = int(NETHOST_DELEGATE_CALLTYPE*)(void*, int);
-	using HostContext = void*;
-
 	class Assembly;
+	class NetClass;
 
 	class NetHostApp
 	{
@@ -32,6 +30,7 @@ namespace nethost
 
 	protected:
 		friend class Assembly;
+		friend class NetClass;
 
 		[[nodiscard]] Func getFunc(const std::string& name, const std::string& nameSpace, const std::string& targetClass, const std::string& targetLib) const;
 		void               getFuncDelegate(void** delegate, const std::string& name, const std::string& nameSpace, const std::string& targetClass, const std::string& targetLib);

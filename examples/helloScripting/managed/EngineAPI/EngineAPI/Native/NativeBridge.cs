@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Runtime.InteropServices;
 using EngineAPI.Engine;
 using EngineAPI.Engine.Components;
@@ -17,8 +18,8 @@ public static class NativeBridge
 	private static VoidCall<(int, Vec3, Vec3, Vec3)> _syncTransformFn;
 	private static TypeCall<(Vec3, Vec3, Vec3), int> _syncBackTransformFn;
 
-	public static List<Entity> Entities = [];
-	public static List<SystemLogic> Systems = [];
+	public static readonly List<Entity> Entities = [];
+	public static readonly List<SystemLogic> Systems = [];
 
 	private static SystemState _state;
 
@@ -51,6 +52,12 @@ public static class NativeBridge
 		Console.WriteLine($"Total Entities: {Entities.Count}");
 	}
 
+	public static Entity? GetEntity(int entityId)
+	{
+		var entity = Entities.FirstOrDefault(ent => ent.Id() == entityId);
+		return entity;
+	}
+
 	public static void UpdateScripts()
 	{
 		foreach (var entity in Entities)
@@ -62,6 +69,32 @@ public static class NativeBridge
 		{
 			system.Update(ref _state);
 		}
+	}
+
+	public static void AddScript(IntPtr scriptName, Entity entity, Assembly[] assemblies)
+	{
+		var scriptBaseType = typeof(Script);
+		var scriptTypes = assemblies
+			.SelectMany(types => types.GetTypes())
+			.Where(type => scriptBaseType.IsAssignableFrom(type) && type is { IsClass: true, IsAbstract: false });
+
+		var scriptTypeList = scriptTypes.ToList();
+
+		var sName = Marshal.PtrToStringUTF8(scriptName);
+		if (sName == null)
+		{
+			Console.WriteLine("Script name was null.");
+		}
+
+		var scriptType = scriptTypeList.FirstOrDefault(type => type.Name == sName);
+		if (scriptType == null)
+		{
+			Console.WriteLine("Script type was null.");
+			return;
+		}
+
+		if (Activator.CreateInstance(scriptType) is Script script)
+			entity.AddScript(script);
 	}
 
 	public static void SyncTransform(Entity entity, Transform transform)

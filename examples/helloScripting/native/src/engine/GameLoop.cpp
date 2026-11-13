@@ -35,7 +35,7 @@ namespace engine
 		m_scriptHost.loadAssemblyRelative("ExampleScripts.dll");
 
 		Entity entity1(0);
-		entity1.addNetComponent("Transform");
+		entity1.addNetScript("HelloWorld");
 
 		addNewEntity(entity1);
 
@@ -51,6 +51,10 @@ namespace engine
 	void GameLoop::addNewEntity(Entity entity)
 	{
 		m_scriptHost.createEntity(entity.entId());
+
+		for (const auto& scripts : entity.getNetScripts())
+			m_scriptHost.addScript(entity.entId(), scripts);
+
 		m_entities.push_back(std::move(entity));
 	}
 
