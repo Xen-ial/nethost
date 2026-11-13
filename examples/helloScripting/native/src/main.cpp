@@ -5,7 +5,11 @@
 
 #include <print>
 
+// TODO: Implemented removeScript, addComponent, removeComponent
+// TODO: Rewrite documentation
+// TODO: Add a few simulated engine api function examples
 // TODO: Link ECS system with Scripting system
+// TODO: Transform syncing example
 
 int main(int argc, const char* argv[])
 {
