@@ -7,20 +7,6 @@
 
 namespace engine
 {
-	struct Vec3
-	{
-		float x;
-		float y;
-		float z;
-	};
-
-	struct Transform
-	{
-		Vec3 position;
-		Vec3 scale;
-		Vec3 rotation;
-	};
-
 	class Entity
 	{
 	public:
