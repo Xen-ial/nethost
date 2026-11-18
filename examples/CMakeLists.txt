@@ -8,3 +8,4 @@ project(examples)
 
 add_subdirectory(helloLib/native)
 add_subdirectory(helloScripting/native)
+add_subdirectory(helloSharpHost/native)

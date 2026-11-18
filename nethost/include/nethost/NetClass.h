@@ -1,11 +1,12 @@
 #pragma once
-#include "nethost/ErrorCodes.h"
 #include <nethost/NetHostApp.h>
 #include <nethost/Utils.h>
 #include <nethost/Log.h>
+#include <nethost/ErrorCodes.h>
 
 #include <string>
-#include <print>
+#include <format>
+#include <type_traits>
 
 namespace nethost
 {
@@ -34,6 +35,42 @@ namespace nethost
 			host.getFuncDelegate(reinterpret_cast<void**>(&delegate), methodName, m_nameSpace, m_className, m_libName);
 
 			return delegate;
+		}
+
+		template <typename T, typename... TArgs>
+		decltype(auto) invokeFunc(const std::string& methodName, TArgs... args)
+		{
+			T func         = getFunc<T>(methodName);
+			using FuncType = decltype(func(std::forward<TArgs>(args)...));
+
+			if constexpr (std::is_void_v<T>)
+			{
+				func(std::forward<TArgs>(args)...);
+				return;
+			}
+			else
+			{
+				FuncType result = func(std::forward<TArgs>(args)...);
+				return result;
+			}
+		}
+
+		template <typename T>
+		decltype(auto) invokeFunc(const std::string& methodName)
+		{
+			T func         = getFunc<T>(methodName);
+			using FuncType = decltype(func());
+
+			if constexpr (std::is_void_v<FuncType>)
+			{
+				func();
+				return;
+			}
+			else
+			{
+				FuncType result = func();
+				return result;
+			}
 		}
 
 	private:

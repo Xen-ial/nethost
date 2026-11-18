@@ -11,7 +11,7 @@ if (NOT CMAKE_GENERATOR STREQUAL "Ninja Multi-Config")
 endif ()
 
 option(NETHOST_BUILD_EXAMPLES "Builds NetHost examples." ON)
-option(NETHOST_BUILD_SCRIPTING_EXTENSION "Builds sharphost extension." OFF)
+option(NETHOST_BUILD_SCRIPTING_EXTENSION "Builds sharphost extension." ON)
 
 project(DotNetHost)
 
@@ -22,5 +22,5 @@ if (NETHOST_BUILD_EXAMPLES)
 endif ()
 
 if (NETHOST_BUILD_SCRIPTING_EXTENSION)
-    add_subdirectory(sharphost)
+    add_subdirectory(sharphost/native)
 endif ()

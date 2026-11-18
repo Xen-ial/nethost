@@ -40,8 +40,9 @@ namespace nethost
 
 		NetClass getNetClass(std::string nameSpace, std::string className);
 
-		[[nodiscard]] bool        hasAssemblyLoaded() const { return m_hasLoaded; }
-		[[nodiscard]] std::string getLibName() const { return m_libName; }
+		[[nodiscard]] bool                    hasAssemblyLoaded() const { return m_hasLoaded; }
+		[[nodiscard]] std::string             getLibName() const { return m_libName; }
+		[[nodiscard]] BorrowedRef<NetHostApp> getNetHostApp() const { return m_nethost; }
 
 	private:
 		BorrowedRef<NetHostApp> m_nethost;
