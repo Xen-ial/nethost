@@ -45,12 +45,6 @@ namespace scripting
 		if (m_loadAssembly == nullptr)
 			throw std::runtime_error("NativeHost: Missing function LoadAssembly().");
 
-		m_initNativeBridge = entryClass.getFunc<InitializeNativeBridge>(
-		    "Initialize");
-
-		if (m_initNativeBridge == nullptr)
-			throw std::runtime_error("NativeHost: Missing function InitNativeBridge().");
-
 		m_createEntity = entryClass.getFunc<CreateEntity>(
 		    "CreateEntity");
 
@@ -121,15 +115,6 @@ namespace scripting
 
 		auto targetAssembly = std::filesystem::absolute(path);
 		m_loadAssembly(targetAssembly.c_str());
-	}
-
-	void NativeBridge::forwardFunctions(ForwardFuncInfo& info)
-	{
-		if (!hasAssemblyLoaded())
-			throw std::runtime_error("NativeHost: Assembly is not initialized.");
-
-		if (m_initNativeBridge(&info) != 0)
-			throw std::runtime_error("NativeHost: Failed to forward functions.");
 	}
 
 	void NativeBridge::createEntity(int entityId)

@@ -1,6 +1,5 @@
 using System.Runtime.InteropServices;
 using System.Runtime.Loader;
-using EngineAPI.Native;
 
 namespace NativeBridge;
 
@@ -39,13 +38,6 @@ public static class Entry
 		}
 
 		return 1;
-	}
-
-	[UnmanagedCallersOnly]
-	public static int Initialize(IntPtr nativeFuncPtrs)
-	{
-		NativeFuncPointers funcPtrs = Marshal.PtrToStructure<NativeFuncPointers>(nativeFuncPtrs);
-		return EngineAPI.Native.NativeBridge.InitalizeHostCallbacks(funcPtrs);
 	}
 
 	[UnmanagedCallersOnly]

@@ -48,19 +48,17 @@ namespace scripting
 		nethost::BorrowedRef<nethost::NetHostApp> m_app;
 		nethost::Assembly                         m_libNativeBridge;
 
-		using EmptyVoid              = void(NETHOST_DELEGATE_CALLTYPE*)();
-		using LoadAssembly           = unsigned char(NETHOST_DELEGATE_CALLTYPE*)(const char*);
-		using InitializeNativeBridge = int(NETHOST_DELEGATE_CALLTYPE*)(void* initTestCall);
-		using CreateEntity           = void(NETHOST_DELEGATE_CALLTYPE*)(int);
-		using DestroyEntity          = void(NETHOST_DELEGATE_CALLTYPE*)(int);
-		using AddScript              = void(NETHOST_DELEGATE_CALLTYPE*)(int, const char*);
-		using DestroyScript          = void(NETHOST_DELEGATE_CALLTYPE*)(int, const char*);
+		using EmptyVoid     = void(NETHOST_DELEGATE_CALLTYPE*)();
+		using LoadAssembly  = unsigned char(NETHOST_DELEGATE_CALLTYPE*)(const char*);
+		using CreateEntity  = void(NETHOST_DELEGATE_CALLTYPE*)(int);
+		using DestroyEntity = void(NETHOST_DELEGATE_CALLTYPE*)(int);
+		using AddScript     = void(NETHOST_DELEGATE_CALLTYPE*)(int, const char*);
+		using DestroyScript = void(NETHOST_DELEGATE_CALLTYPE*)(int, const char*);
 
 		EmptyVoid m_createScriptingDomain{nullptr};
 		EmptyVoid m_destroyScriptingDomain{nullptr};
 
-		LoadAssembly           m_loadAssembly{nullptr};
-		InitializeNativeBridge m_initNativeBridge{nullptr};
+		LoadAssembly m_loadAssembly{nullptr};
 
 		CreateEntity  m_createEntity{nullptr};
 		DestroyEntity m_destroyEntity{nullptr};
