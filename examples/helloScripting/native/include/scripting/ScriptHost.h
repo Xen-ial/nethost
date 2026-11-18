@@ -28,6 +28,7 @@ namespace scripting
 		void updateScripts();
 
 		void addScript(int entityId, std::string scriptName);
+		void destroyScript(int entityId, std::string scriptName);
 
 	private:
 		nethost::NetHostApp         m_nethostApp;

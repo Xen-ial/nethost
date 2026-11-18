@@ -83,6 +83,14 @@ namespace scripting
 		m_nativeBridge->addScript(entityId, scriptName);
 	}
 
+	void ScriptHost::destroyScript(int entityId, std::string scriptName)
+	{
+		if (!m_nativeBridge.has_value() || !m_nativeBridge->hasAssemblyLoaded())
+			return;
+
+		m_nativeBridge->destroyScript(entityId, scriptName);
+	}
+
 	bool ScriptHost::init()
 	{
 		m_nativeBridge.emplace(m_nethostApp);

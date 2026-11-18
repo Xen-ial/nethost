@@ -26,15 +26,18 @@ namespace engine
 
 	void Entity::removeNetScript(const std::string& scrName)
 	{
-		if (m_netScripts.contains(scrName))
-			m_netScripts.erase(scrName);
+		if (!m_netScripts.contains(scrName))
+			return;
+
+		m_netScripts.erase(scrName);
+		m_scriptHost.get().destroyScript(m_eId, scrName);
 	}
 
 	void GameLoop::run()
 	{
 		m_scriptHost.loadAssemblyRelative("ExampleScripts.dll");
 
-		Entity entity1(0);
+		Entity entity1(0, m_scriptHost);
 		entity1.addNetScript("HelloWorld");
 
 		addNewEntity(entity1);
@@ -45,6 +48,7 @@ namespace engine
 		while (isRunning())
 		{
 			m_scriptHost.updateScripts();
+			entity1.removeNetScript("HelloWorld");
 		}
 	}
 

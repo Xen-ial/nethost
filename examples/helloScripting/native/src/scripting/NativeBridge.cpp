@@ -81,6 +81,12 @@ namespace scripting
 		if (m_addScript == nullptr)
 			throw std::runtime_error("NativeHost: Missing function AddScript()");
 
+		m_destroyScript = entryClass.getFunc<DestroyScript>(
+		    "DestroyScript");
+
+		if (m_destroyScript == nullptr)
+			throw std::runtime_error("NativeHost: Missing function DestroyScript()");
+
 		m_hasResolvedFNS = true;
 	}
 
@@ -164,5 +170,13 @@ namespace scripting
 			throw std::runtime_error("NativeHost: Assembly is not initialized.");
 
 		m_addScript(entityId, scriptName.c_str());
+	}
+
+	void NativeBridge::destroyScript(int entityId, std::string& scriptName)
+	{
+		if (!hasAssemblyLoaded())
+			throw std::runtime_error("NativeHost: Assembly is not initialized.");
+
+		m_destroyScript(entityId, scriptName.c_str());
 	}
 } // namespace scripting

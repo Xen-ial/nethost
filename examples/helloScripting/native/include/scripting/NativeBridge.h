@@ -39,6 +39,7 @@ namespace scripting
 		void updateScripts();
 
 		void addScript(int entityId, std::string& scriptName);
+		void destroyScript(int entityid, std::string& scriptName);
 
 		[[nodiscard]] nethost::Assembly getLib() const { return m_libNativeBridge; }
 		[[nodiscard]] bool              hasAssemblyLoaded() const { return m_libNativeBridge.hasAssemblyLoaded() && m_hasResolvedFNS; }
@@ -53,6 +54,7 @@ namespace scripting
 		using CreateEntity           = void(NETHOST_DELEGATE_CALLTYPE*)(int);
 		using DestroyEntity          = void(NETHOST_DELEGATE_CALLTYPE*)(int);
 		using AddScript              = void(NETHOST_DELEGATE_CALLTYPE*)(int, const char*);
+		using DestroyScript          = void(NETHOST_DELEGATE_CALLTYPE*)(int, const char*);
 
 		EmptyVoid m_createScriptingDomain{nullptr};
 		EmptyVoid m_destroyScriptingDomain{nullptr};
@@ -65,7 +67,8 @@ namespace scripting
 		EmptyVoid     m_printAllEntities{nullptr};
 		EmptyVoid     m_updateScripts{nullptr};
 
-		AddScript m_addScript{nullptr};
+		AddScript     m_addScript{nullptr};
+		DestroyScript m_destroyScript{nullptr};
 
 		bool m_hasResolvedFNS{};
 

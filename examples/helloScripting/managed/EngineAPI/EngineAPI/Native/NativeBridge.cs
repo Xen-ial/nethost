@@ -97,6 +97,31 @@ public static class NativeBridge
 			entity.AddScript(script);
 	}
 
+	public static void DestroyScript(IntPtr scriptName, Entity entity, Assembly[] assemblies)
+	{
+		var scriptBaseType = typeof(Script);
+		var scriptTypes = assemblies
+			.SelectMany(types => types.GetTypes())
+			.Where(type => scriptBaseType.IsAssignableFrom(type) && type is { IsClass: true, IsAbstract: false });
+
+		var scriptTypeList = scriptTypes.ToList();
+
+		var sName = Marshal.PtrToStringUTF8(scriptName);
+		if (sName == null)
+		{
+			Console.WriteLine("Script name was null.");
+		}
+
+		var scriptType = scriptTypeList.FirstOrDefault(type => type.Name == sName);
+		if (scriptType == null)
+		{
+			Console.WriteLine("Script type was null.");
+			return;
+		}
+
+		entity.RemoveScript(scriptType);
+	}
+
 	public static void SyncTransform(Entity entity, Transform transform)
 	{
 		if (!_syncTransformFn.IsResolved())

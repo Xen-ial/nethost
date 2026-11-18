@@ -101,4 +101,14 @@ public class Entity(int entityId)
 
 		_scripts.Remove(script);
 	}
+
+	public void RemoveScript(Type scriptType)
+	{
+		var script = _scripts.FirstOrDefault(type => type.GetType() == scriptType);
+
+		if (script == null)
+			return;
+
+		_scripts.Remove(script);
+	}
 }

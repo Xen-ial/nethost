@@ -1,4 +1,5 @@
 #pragma once
+#include "nethost/Utils.h"
 #include <scripting/ScriptHost.h>
 
 #include <string>
@@ -23,7 +24,8 @@ namespace engine
 	class Entity
 	{
 	public:
-		Entity(int eId) : m_eId(eId) {}
+		Entity(int eId, nethost::BorrowedRef<scripting::ScriptHost> scriptHost)
+		    : m_eId(eId), m_scriptHost(scriptHost) {}
 
 		void addNetComponent(const std::string& compName);
 		void addNetScript(const std::string& scrName);
@@ -40,6 +42,7 @@ namespace engine
 		std::unordered_set<std::string> m_netComponents;
 		std::unordered_set<std::string> m_netScripts;
 
+		nethost::BorrowedRef<scripting::ScriptHost> m_scriptHost;
 		// C++ Components, Scripts here
 	};
 
@@ -57,7 +60,6 @@ namespace engine
 		bool m_isRunning{};
 
 		scripting::ScriptHost m_scriptHost;
-
-		std::vector<Entity> m_entities;
+		std::vector<Entity>   m_entities;
 	};
 } // namespace engine

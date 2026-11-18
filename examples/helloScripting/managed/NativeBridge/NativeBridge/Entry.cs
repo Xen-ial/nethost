@@ -90,4 +90,23 @@ public static class Entry
 
 		EngineAPI.Native.NativeBridge.AddScript(scriptName, entity, [.. _scriptingDomain.Assemblies]);
 	}
+
+	[UnmanagedCallersOnly]
+	public static void DestroyScript(int entityId, IntPtr scriptName)
+	{
+		var entity = EngineAPI.Native.NativeBridge.GetEntity(entityId);
+		if (entity == null)
+		{
+			Console.WriteLine("Entity is null");
+			return;
+		}
+
+		if (_scriptingDomain == null)
+		{
+			Console.WriteLine("Scripting Domain is not created can not resolve scripts.");
+			return;
+		}
+
+		EngineAPI.Native.NativeBridge.DestroyScript(scriptName, entity, [.. _scriptingDomain.Assemblies]);
+	}
 }
