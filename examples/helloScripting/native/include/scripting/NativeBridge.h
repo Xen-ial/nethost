@@ -5,14 +5,6 @@
 
 namespace scripting
 {
-	/**
-	 * @brief Forwards functions to the .NET assembly
-	 */
-	struct ForwardFuncInfo
-	{
-		void* pTestFn{nullptr};
-	};
-
 	class NativeBridge
 	{
 	public:
@@ -30,8 +22,6 @@ namespace scripting
 
 		void loadAssembly(const std::string& path);
 		void loadAssemblyRelative(const std::string& path);
-
-		void forwardFunctions(ForwardFuncInfo& info);
 
 		void createEntity(int entityId);
 		void destroyEntity(int entityId);

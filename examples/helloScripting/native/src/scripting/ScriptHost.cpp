@@ -5,14 +5,6 @@
 #include <nethost/NetHostApp.h>
 #include <nethost/Assembly.h>
 
-namespace
-{
-	struct FuncData
-	{
-		void* pTestFn{nullptr};
-	};
-} // namespace
-
 namespace scripting
 {
 	ScriptHost::ScriptHost()
@@ -98,9 +90,6 @@ namespace scripting
 			return false;
 
 		m_nativeBridge->createScriptingDomain();
-		ForwardFuncInfo funcInfo{};
-
-		// m_nativeBridge->forwardFunctions(funcInfo);
 		return true;
 	}
 
