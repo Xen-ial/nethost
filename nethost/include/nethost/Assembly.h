@@ -13,6 +13,9 @@
 
 namespace nethost
 {
+	/**
+	 * @brief C# Assembly / Class Library wrapper. Simplifies Host FXR interactions with function calls.
+	 */
 	class Assembly
 	{
 	public:

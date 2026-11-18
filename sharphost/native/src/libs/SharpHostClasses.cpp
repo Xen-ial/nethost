@@ -8,10 +8,7 @@ namespace sharphost::classes
 {
 	ManagedHostClass::ManagedHostClass(nethost::BorrowedRef<nethost::Assembly> sharpHostAssembly)
 	    : m_sharpHostAssembly(sharpHostAssembly),
-	      nethost::NetClass(sharpHostAssembly.get().getNetHostApp(), sharpHostAssembly.get().getLibName(),
-	          "SharpHost", "ManagedHost")
+	      nethost::NetClass(sharpHostAssembly.get().getNetClass("SharpHost", "ManagedHost"))
 	{
-		if (!loadFuncs())
-			nethost::err::logln("Failed to load ManagedHost functions", nethost::err::StatusCode::FAILURE);
 	}
 } // namespace sharphost::classes
