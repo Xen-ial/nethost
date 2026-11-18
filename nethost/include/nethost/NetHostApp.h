@@ -52,6 +52,7 @@ namespace nethost
 		using LoadAssemblyFunc         = int(NETHOST_DELEGATE_CALLTYPE*)(const char*, void*, void*);
 		using LoadAssemblyBytesFunc    = int(NETHOST_DELEGATE_CALLTYPE*)(const void*, unsigned long, const void*, unsigned long, void*, void*);
 		using GetFunctionPointerFunc   = int(NETHOST_DELEGATE_CALLTYPE*)(const char*, const char*, const char*, void*, void*, void**);
+		using HostFXRErrorCallbackFunc = void(NETHOST_DELEGATE_CALLTYPE* (*)(void (*)(const char*)))(const char*);
 
 		HostContext m_hostContext = nullptr;
 
@@ -61,6 +62,7 @@ namespace nethost
 		LoadAssemblyFunc         m_loadAssembly         = nullptr;
 		LoadAssemblyBytesFunc    m_loadAssemblyBytes    = nullptr;
 		GetFunctionPointerFunc   m_getFunctionPointer   = nullptr;
+		HostFXRErrorCallbackFunc m_hostFXRErrorCallback = nullptr;
 
 		bool m_isInitialized{};
 

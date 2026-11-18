@@ -97,6 +97,9 @@ namespace nethost
 		m_close = reinterpret_cast<CloseFunc>(
 		    getExport(lib, "hostfxr_close"));
 
+		m_hostFXRErrorCallback = reinterpret_cast<HostFXRErrorCallbackFunc>(
+		    getExport(lib, "hostfxr_set_error_writer"));
+
 		int result = m_initForRuntimeConfig(runtimeConfigPath.c_str(),
 		    nullptr, &m_hostContext);
 
@@ -106,6 +109,9 @@ namespace nethost
 			m_close(m_hostContext);
 			return false;
 		}
+
+		m_hostFXRErrorCallback([](const NetHostChar* message)
+		    { err::logln(message, err::StatusCode::FAILURE); });
 
 		result = m_getRuntimeDelegate(
 		    m_hostContext,

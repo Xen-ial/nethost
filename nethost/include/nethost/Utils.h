@@ -3,8 +3,14 @@
 
 #if defined(_WIN32)
 #define NETHOST_DELEGATE_CALLTYPE __stdcall
+#ifdef _WCHAR_T_DEFINED
+using NetHostChar = wchar_t;
+#else
+using NetHostChar = unsigned short;
+#endif
 #else
 #define NETHOST_DELEGATE_CALLTYPE
+using NetHostChar = char;
 #endif
 
 #if defined(_MSC_VER)

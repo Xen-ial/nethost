@@ -297,6 +297,8 @@ namespace nethost::err
 			return "HOST_API_UNSUPPORTED_SCENARIO";
 		case StatusCode::HOST_FEATURE_DISABLED:
 			return "HOST_FEATURE_DISABLED";
+		case StatusCode::FAILURE:
+			return "FAILURE";
 		}
 
 		return {};
