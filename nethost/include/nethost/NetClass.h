@@ -10,16 +10,37 @@
 
 namespace nethost
 {
+	/**
+	 * @brief Container for managed C# classes, simplifies interactions with function invocation, and getting managed function delegates.
+	 */
 	class NetClass
 	{
 	public:
+		/**
+		 * @brief Constructs a managed net class container.
+		 * @param app Target host app context
+		 * @param libName Library name
+		 * @param nameSpace Class namespace
+		 * @param className Class name
+		 */
 		NetClass(BorrowedRef<NetHostApp> app, std::string libName, std::string nameSpace, std::string className)
 		    : m_nethostApp(app), m_libName(std::move(libName)), m_nameSpace(std::move(nameSpace)), m_className(std::move(className))
 		{
 		}
 
+		/**
+		 * @brief Get the managed delegate function
+		 * @param methodName Target function name
+		 * @return Func Function delegate
+		 */
 		Func getFunc(const std::string& methodName);
 
+		/**
+		 * @brief Get the managed delegate function with a return type
+		 * @tparam T Managed function delegate type
+		 * @param methodName Target function name
+		 * @return T Returns managed function delegate type
+		 */
 		template <typename T>
 		T getFunc(const std::string& methodName)
 		{
@@ -37,6 +58,14 @@ namespace nethost
 			return delegate;
 		}
 
+		/**
+		 * @brief Handles function invocation with auto type deduction, and argument forwarding
+		 * @tparam T Delegate type
+		 * @tparam TArgs Delegate args
+		 * @param methodName Target method name
+		 * @param args Method arguments
+		 * @return decltype(auto) Method return value
+		 */
 		template <typename T, typename... TArgs>
 		decltype(auto) invokeFunc(const std::string& methodName, TArgs... args)
 		{
@@ -55,6 +84,12 @@ namespace nethost
 			}
 		}
 
+		/**
+		 * @brief Handles function invocation with auto type deduction, without arguments
+		 * @tparam T Delegate type
+		 * @param methodName Target method name
+		 * @return decltype(auto) Method return value
+		 */
 		template <typename T>
 		decltype(auto) invokeFunc(const std::string& methodName)
 		{

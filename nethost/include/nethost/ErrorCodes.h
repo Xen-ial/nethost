@@ -4,6 +4,9 @@
 
 namespace nethost::err
 {
+	/**
+	 * @brief .NET Host FXR status codes
+	 */
 	enum class StatusCode : std::uint8_t
 	{
 		EMPTY = 0,
@@ -58,7 +61,24 @@ namespace nethost::err
 		HOST_FEATURE_DISABLED
 	};
 
-	StatusCode  fromFXR(long fxrStatusCode);
-	long        fromStatusCode(StatusCode code);
+	/**
+	 * @brief Convert native status code into enum
+	 * @param fxrStatusCode Native status code
+	 * @return StatusCode Converted enum
+	 */
+	StatusCode fromFXR(long fxrStatusCode);
+
+	/**
+	 * @brief Status code to native code
+	 * @param code StatusCode to convert
+	 * @return long Converted status code
+	 */
+	long fromStatusCode(StatusCode code);
+
+	/**
+	 * @brief Convert status code enum to string
+	 * @param code StatusCode to convert
+	 * @return std::string Converted status code
+	 */
 	std::string statusCodeToString(StatusCode code);
 } // namespace nethost::err

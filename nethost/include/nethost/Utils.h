@@ -30,9 +30,25 @@ namespace nethost
 	using Func        = int(NETHOST_DELEGATE_CALLTYPE*)(void*, int);
 	using HostContext = void*;
 
+	/**
+	 * @brief Shared reference, wrapped with (reference_wrapper)
+	 * @tparam T Target reference type to wrap
+	 */
 	template <class T>
 	using BorrowedRef = std::reference_wrapper<T>;
 
+	/**
+	 * @brief Load library into memory
+	 * @param path Path to library
+	 * @return void* Raw library bytes
+	 */
 	void* loadLibrary(const char* path);
+
+	/**
+	 * @brief Resolve the library exports
+	 * @param handle Library handle
+	 * @param name Target export name
+	 * @return void* Raw function bytes
+	 */
 	void* getExport(void* handle, const char* name);
 } // namespace nethost
