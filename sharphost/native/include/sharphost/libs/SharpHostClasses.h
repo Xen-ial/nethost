@@ -14,15 +14,6 @@ namespace sharphost::classes
 	public:
 		ManagedHostClass(nethost::BorrowedRef<nethost::Assembly> sharpHostAssembly);
 
-		void testCall()
-		{
-			if (!hasAssemblyLoaded())
-				return;
-
-			using TestCall = void(NETHOST_DELEGATE_CALLTYPE*)();
-			invokeFunc<TestCall>("TestCall");
-		}
-
 	private:
 		nethost::BorrowedRef<nethost::Assembly> m_sharpHostAssembly;
 

@@ -37,7 +37,7 @@ namespace sharphost
 
 		/**
 		 * @brief Get the Sharp Host Library Bytes
-		 * @return std::vector<std::byte>  Returns managed sharp host library bytes
+		 * @return std::vector<std::byte> Returns managed sharp host library bytes
 		 */
 		static std::vector<std::byte> getSharpHostLibBytes();
 	};

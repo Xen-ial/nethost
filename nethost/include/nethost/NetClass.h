@@ -69,17 +69,17 @@ namespace nethost
 		template <typename T, typename... TArgs>
 		decltype(auto) invokeFunc(const std::string& methodName, TArgs... args)
 		{
-			T func         = getFunc<T>(methodName);
-			using FuncType = decltype(func(std::forward<TArgs>(args)...));
+			T func           = getFunc<T>(methodName);
+			using ReturnType = decltype(func(std::forward<TArgs>(args)...));
 
-			if constexpr (std::is_void_v<T>)
+			if constexpr (std::is_void_v<ReturnType>)
 			{
 				func(std::forward<TArgs>(args)...);
 				return;
 			}
 			else
 			{
-				FuncType result = func(std::forward<TArgs>(args)...);
+				ReturnType result = func(std::forward<TArgs>(args)...);
 				return result;
 			}
 		}
@@ -93,17 +93,17 @@ namespace nethost
 		template <typename T>
 		decltype(auto) invokeFunc(const std::string& methodName)
 		{
-			T func         = getFunc<T>(methodName);
-			using FuncType = decltype(func());
+			T func           = getFunc<T>(methodName);
+			using ReturnType = decltype(func());
 
-			if constexpr (std::is_void_v<FuncType>)
+			if constexpr (std::is_void_v<ReturnType>)
 			{
 				func();
 				return;
 			}
 			else
 			{
-				FuncType result = func();
+				ReturnType result = func();
 				return result;
 			}
 		}
