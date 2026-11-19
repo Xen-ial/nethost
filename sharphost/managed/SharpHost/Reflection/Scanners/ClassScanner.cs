@@ -52,7 +52,7 @@ public static class ClassScanner
 			Classes = [],
 			Constructors = ConstructorScanner.GetConstructors(type),
 			Enums = EnumScanner.GetReflectedEnums(type),
-            
+            Fields = FieldScanner.GetFields(type),
 		};
 
 		return reflectedClass;
