@@ -3,6 +3,10 @@
 #include <nethost/NetClass.h>
 #include <nethost/Utils.h>
 
+#include <string>
+#include <vector>
+#include <cstddef>
+
 namespace sharphost::classes
 {
 	/**
@@ -13,6 +17,15 @@ namespace sharphost::classes
 	{
 	public:
 		ManagedHostClass(nethost::BorrowedRef<nethost::Assembly> sharpHostAssembly);
+
+		void createAssemblyLoadContext(const std::string& contextName);
+		void unloadAndDestroyAssemblyContext(const std::string& contextName);
+		void rebuildMaps();
+
+		void loadAssemblyFromPath(const std::string& contextName, const std::string& path);
+		void loadAssemblyFromBytes(const std::string& contextName, const std::vector<std::byte>& assemblyBytes);
+
+		void printClasses();
 
 	private:
 		nethost::BorrowedRef<nethost::Assembly> m_sharpHostAssembly;

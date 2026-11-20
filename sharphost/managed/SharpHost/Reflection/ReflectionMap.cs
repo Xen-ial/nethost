@@ -48,13 +48,22 @@ public class ReflectionMap
 					reflectedEnums.Add(reflectedEnum);
 					continue;
 				}
+
+				if (StructScanner.IsStruct(type))
+				{
+					var reflectedStruct = StructScanner.GetStruct(type);
+					if (reflectedStruct == null) continue;
+
+					reflectedStructs.Add(reflectedStruct);
+				}
 			}
 
 			var reflectedAssembly = new ReflectedAssembly()
 			{
 				MetaData = assemblyMetaData,
 				Classes = reflectedClasses,
-				Enums = reflectedEnums
+				Enums = reflectedEnums,
+				Structs = reflectedStructs
 			};
 
 			_reflectedAssemblies.Add(reflectedAssembly);

@@ -84,7 +84,6 @@ public class ReflectedField
 	public List<ReflectedAttribute> Attributes = [];
 
 	public Type? FieldType = null;
-	public object? Value = null;
 
 	public bool IsStatic = false;
 	public bool IsConst = false;
@@ -99,7 +98,6 @@ public class ReflectedProperty
 	public List<ReflectedAttribute> Attributes = [];
 
 	public Type? PropertyType = null;
-	public object? Value = null;
 
 	public bool CanRead = false;
 	public bool CanWrite = false;
@@ -119,7 +117,7 @@ public class ReflectedStruct
 
 	public List<ReflectedAttribute> Attributes = [];
 
-	public List<ReflectedClass> Calsses = [];
+	public List<ReflectedClass> Classes = [];
 	public List<ReflectedField> Fields = [];
 	public List<ReflectedProperty> Properties = [];
 	public List<ReflectedStruct> Structs = [];
@@ -161,15 +159,15 @@ public class ReflectedClass
 public class ReflectedAssembly
 {
 	public ReflectionMetaData MetaData = new();
-    
+
 	public List<ReflectedClass> Classes = [];
 	public List<ReflectedStruct> Structs = [];
 	public List<ReflectedEnum> Enums = [];
 
 	public void Reset()
 	{
-        Classes.Clear();
-        Structs.Clear();
+		Classes.Clear();
+		Structs.Clear();
 		Enums.Clear();
 	}
 }

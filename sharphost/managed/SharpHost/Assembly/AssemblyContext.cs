@@ -4,12 +4,14 @@ namespace SharpHost.Assembly;
 
 public class AssemblyContext
 {
-	private List<AssemblyLoadContext> _assemblyLoadContexts = [];
+	private readonly List<AssemblyLoadContext> _assemblyLoadContexts = [];
 
-	public void CreateAssemblyLoadContext(string name)
+	public AssemblyLoadContext CreateAssemblyLoadContext(string name)
 	{
 		var loadContext = new AssemblyLoadContext(name, isCollectible: true);
 		_assemblyLoadContexts.Add(loadContext);
+
+		return loadContext;
 	}
 
 	public void UnloadAndDestroyAssemblyContext(string name)
@@ -21,12 +23,12 @@ public class AssemblyContext
 		_assemblyLoadContexts.Remove(loadContext);
 	}
 
-	public void LoadAssemblyFromPath(string path, AssemblyLoadContext context)
+	public static void LoadAssemblyFromPath(string path, AssemblyLoadContext context)
 	{
 		context.LoadFromAssemblyPath(path);
 	}
 
-	public void LoadAssemblyFromBytes(byte[] assemblyBytes, AssemblyLoadContext context)
+	public static void LoadAssemblyFromBytes(byte[] assemblyBytes, AssemblyLoadContext context)
 	{
 		using var stream = new MemoryStream(assemblyBytes);
 		context.LoadFromStream(stream);

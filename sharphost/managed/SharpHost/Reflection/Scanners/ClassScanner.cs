@@ -4,12 +4,33 @@ namespace SharpHost.Reflection.Scanners;
 
 public static class ClassScanner
 {
+	public static List<ReflectedClass> GetClasses(Type type, bool isDeepScan = false)
+	{
+		List<ReflectedClass> classes = [];
+		const BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic |
+		                           BindingFlags.Instance | BindingFlags.Static |
+		                           BindingFlags.DeclaredOnly;
+
+		foreach (var classType in type.GetNestedTypes(flags))
+		{
+			if (!type.IsClass) continue;
+			var reflectedClass = GetClass(classType, isDeepScan);
+
+			if (reflectedClass == null) continue;
+			classes.Add(reflectedClass);
+		}
+
+		return classes;
+	}
+
 	public static ReflectedClass? GetClass(Type type, bool isDeepScan = false)
 	{
 		if (!type.IsClass) return null;
 
 		var refClass = UnwrapClass(type);
-		const BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic;
+		const BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic |
+		                           BindingFlags.Instance | BindingFlags.Static |
+		                           BindingFlags.DeclaredOnly;
 
 		foreach (var nestedType in type.GetNestedTypes(flags))
 		{
@@ -52,7 +73,11 @@ public static class ClassScanner
 			Classes = [],
 			Constructors = ConstructorScanner.GetConstructors(type),
 			Enums = EnumScanner.GetReflectedEnums(type),
-            Fields = FieldScanner.GetFields(type),
+			Fields = FieldScanner.GetFields(type),
+			Functions = FunctionScanner.GetFunctions(type),
+			Interfaces = [.. type.GetInterfaces()],
+			Properties = PropertyScanner.GetProperties(type),
+            Structs = StructScanner.GetStructs(type, isDeepScan: true)
 		};
 
 		return reflectedClass;

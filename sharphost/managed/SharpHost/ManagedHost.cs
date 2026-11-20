@@ -1,6 +1,7 @@
 using System.Runtime.InteropServices;
 using SharpHost.Assembly;
 using SharpHost.Helpers;
+using SharpHost.Reflection;
 
 namespace SharpHost;
 
@@ -18,7 +19,8 @@ public class ManagedHost
 			return;
 		}
 
-		AssemblyContext.CreateAssemblyLoadContext(assemblyLoadContextName);
+		var context = AssemblyContext.CreateAssemblyLoadContext(assemblyLoadContextName);
+		ReflectionMapManager.AddMap(context);
 	}
 
 	[UnmanagedCallersOnly]
@@ -38,6 +40,7 @@ public class ManagedHost
 			return;
 		}
 
+		ReflectionMapManager.RemoveMap(loadContext);
 		AssemblyContext.UnloadAndDestroyAssemblyContext(assemblyContextName);
 	}
 
@@ -66,6 +69,9 @@ public class ManagedHost
 		}
 
 		AssemblyContext.LoadAssemblyFromPath(path, loadContext);
+
+		ReflectionMapManager.ResetMap(loadContext);
+		ReflectionMapManager.AddMap(loadContext);
 	}
 
 	[UnmanagedCallersOnly]
@@ -91,5 +97,35 @@ public class ManagedHost
 		}
 
 		AssemblyContext.LoadAssemblyFromBytes(assembly, loadContext);
+
+		ReflectionMapManager.ResetMap(loadContext);
+		ReflectionMapManager.AddMap(loadContext);
+	}
+
+	[UnmanagedCallersOnly]
+	public static void RebuildMaps()
+	{
+        ReflectionMapManager.RebuildMaps();
+	}
+
+	[UnmanagedCallersOnly]
+	public static void DisplayFoundClasses()
+	{
+		foreach (var map in ReflectionMapManager.Maps)
+		{
+			foreach (var assembly in map.GetReflectedAssemblies)
+			{
+				foreach (var reflectedClass in assembly.Classes)
+				{
+					var metaData = reflectedClass.MetaData;
+					Console.WriteLine($"FullName: {metaData.FullName}\nClassName: {metaData.Name}\nNameSpace: {metaData.Namespace}");
+					foreach (var function in reflectedClass.Functions)
+					{
+						var funcMetaData = function.MetaData;
+						Console.WriteLine($"FuncName: {funcMetaData.Name}");
+					}
+				}
+			}
+		}
 	}
 }
