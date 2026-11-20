@@ -15,6 +15,7 @@ public static class FieldScanner
 
 		foreach (var field in targetType.GetFields(flags))
 		{
+			var declaringType = field.DeclaringType;
 			var reflectedField = new ReflectedField()
 			{
 				Attributes = AttributeScanner.GetAttributes(field, instantiate: true),
@@ -26,15 +27,15 @@ public static class FieldScanner
 				{
 					AssemblyName = field.FieldType.Assembly.GetName().Name,
 					Name = field.Name,
-					FullName = field.FieldType.FullName,
-					Namespace = field.FieldType.Namespace,
-					IsAbstract = field.FieldType.IsAbstract,
+					FullName = declaringType != null ? $"{declaringType.FullName}.{field.Name}" : field.Name,
+					Namespace = declaringType != null ? declaringType.Namespace : targetType.Namespace,
+					IsAbstract = declaringType?.IsAbstract ?? false,
 					IsPrivate = field.IsPrivate,
-					IsInternal = field.FieldType.IsNotPublic,
+					IsInternal = declaringType?.IsNotPublic ?? false,
 					IsPublic = field.IsPublic,
-					IsSealed = field.FieldType.IsSealed,
+					IsSealed = declaringType?.IsSealed ?? false,
 					IsStatic = field.IsStatic,
-					ObjectType = field.GetType()
+					ObjectType = field.FieldType
 				},
 			};
 

@@ -15,8 +15,9 @@ public static class ConstructorScanner
 				Metadata = new ReflectionMetadata()
 				{
 					Name = constructor.Name,
-					AssemblyName = type.Assembly.FullName,
+					AssemblyName = type.Assembly.GetName().Name,
 					FullName = type.FullName,
+					Namespace = type.Namespace,
 					IsAbstract = constructor.IsAbstract,
 					IsInternal = type.IsNotPublic,
 					IsPrivate = constructor.IsPrivate,

@@ -43,14 +43,15 @@ public static class AttributeScanner
 				Metadata = new ReflectionMetadata()
 				{
 					Name = attrType.Name,
-					AssemblyName = attrType.Assembly.FullName,
+					AssemblyName = attrType.Assembly.GetName().Name,
 					FullName = attrType.FullName,
+					Namespace = attrType.Namespace,
 					ObjectType = attrType,
 					IsPublic = attrType.IsPublic,
 					IsAbstract = attrType.IsAbstract,
 					IsInternal = attrType.IsNotPublic,
 					IsPrivate = !attrType.IsPublic,
-					IsSealed = attrType.IsSealed
+					IsSealed = attrType.IsSealed,
 				},
 				Instance = i < instances.Count ? instances[i] : null
 			};

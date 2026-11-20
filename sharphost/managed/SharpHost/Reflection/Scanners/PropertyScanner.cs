@@ -20,15 +20,15 @@ public static class PropertyScanner
 				Metadata = new ReflectionMetadata()
 				{
 					Name = prop.Name,
-					AssemblyName = prop.GetType().Assembly.FullName,
-					FullName = prop.GetType().FullName,
-					IsAbstract = prop.GetType().IsAbstract,
-					IsInternal = prop.GetType().IsNotPublic,
-					IsPrivate = !prop.GetType().IsPublic,
-					IsPublic = prop.GetType().IsPublic,
-					IsSealed = prop.GetType().IsSealed,
+					AssemblyName = prop.PropertyType.Assembly.FullName,
+					FullName = prop.PropertyType.FullName,
+					IsAbstract = prop.PropertyType.IsAbstract,
+					IsInternal = prop.PropertyType.IsNotPublic,
+					IsPrivate = !prop.PropertyType.IsPublic,
+					IsPublic = prop.PropertyType.IsPublic,
+					IsSealed = prop.PropertyType.IsSealed,
 					IsStatic = prop.GetAccessors(nonPublic: true).Any(acc => acc.IsStatic),
-					Namespace = prop.GetType().Namespace,
+					Namespace = prop.PropertyType.Namespace,
 					ObjectType = prop.PropertyType
 				},
 				PropertyInfo = prop,

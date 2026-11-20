@@ -59,13 +59,14 @@ public static class ClassScanner
 			{
 				Name = type.Name,
 				Namespace = type.Namespace,
-				AssemblyName = type.Assembly.FullName,
+				AssemblyName = type.Assembly.GetName().Name,
 				FullName = type.FullName,
 				IsAbstract = type.IsAbstract,
 				IsInternal = type.IsNotPublic,
 				IsPrivate = !type.IsPublic,
 				IsSealed = type.IsSealed,
 				IsPublic = type.IsPublic,
+				IsStatic = type is { IsClass: true, IsAbstract: true, IsSealed: true },
 				ObjectType = type
 			},
 			Attributes = AttributeScanner.GetAttributes(type, instantiate: true),

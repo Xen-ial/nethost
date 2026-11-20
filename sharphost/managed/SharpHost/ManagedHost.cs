@@ -1,4 +1,6 @@
 using System.Runtime.InteropServices;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using SharpHost.Assembly;
 using SharpHost.Helpers;
 using SharpHost.Reflection;
@@ -115,16 +117,14 @@ public class ManagedHost
 		{
 			foreach (var assembly in map.GetReflectedAssemblies)
 			{
-				foreach (var reflectedClass in assembly.Classes)
+				var jsonOptions = new JsonSerializerOptions()
 				{
-					var metadata = reflectedClass.Metadata;
-					Console.WriteLine($"FullName: {metadata.FullName}\nClassName: {metadata.Name}\nNameSpace: {metadata.Namespace}");
-					foreach (var function in reflectedClass.Functions)
-					{
-						var funcMetadata = function.Metadata;
-						Console.WriteLine($"FuncName: {funcMetadata.Name}");
-					}
-				}
+					IncludeFields = true,
+					WriteIndented = true,
+				};
+
+				string json = JsonSerializer.Serialize(assembly, jsonOptions);
+				File.WriteAllText($"{Directory.GetCurrentDirectory()}/test.txt", json);
 			}
 		}
 	}

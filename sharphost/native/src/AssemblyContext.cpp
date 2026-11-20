@@ -1,4 +1,8 @@
+#include <format>
 #include <sharphost/AssemblyContext.h>
+#include <nethost/Log.h>
+
+#include <filesystem>
 
 namespace sharphost
 {
@@ -17,9 +21,13 @@ namespace sharphost
 
 	void AssemblyContext::unload()
 	{
+		if (m_contextName.empty())
+			return;
+
 		auto managedHost = m_sharpHostLib.get().getManagedHost();
 		managedHost.unloadAndDestroyAssemblyContext(m_contextName);
 		managedHost.rebuildMaps();
+		m_contextName.clear();
 	}
 
 	void AssemblyContext::rebuildReflectionMap()
@@ -28,8 +36,17 @@ namespace sharphost
 
 	void AssemblyContext::loadAssembly(const std::string& path)
 	{
+		std::error_code errorCode{};
+		auto            absPath = std::filesystem::canonical(path, errorCode);
+
+		if (errorCode.value() != 0)
+		{
+			nethost::err::logln(std::format("LoadAssembly {}", errorCode.message()), nethost::err::StatusCode::APP_PATH_FIND_FAILURE);
+			return;
+		}
+
 		auto managedHost = m_sharpHostLib.get().getManagedHost();
-		managedHost.loadAssemblyFromPath(m_contextName, path);
+		managedHost.loadAssemblyFromPath(m_contextName, absPath);
 		managedHost.rebuildMaps();
 	}
 

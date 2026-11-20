@@ -50,7 +50,7 @@ public static class EnumScanner
 			{
 				Name = enumType.Name,
 				Namespace = enumType.Namespace,
-				AssemblyName = enumType.Assembly.FullName,
+				AssemblyName = enumType.Assembly.GetName().Name,
 				FullName = enumType.FullName,
 				IsAbstract = enumType.IsAbstract,
 				IsInternal = enumType.IsNotPublic,

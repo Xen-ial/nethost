@@ -33,16 +33,16 @@ public static class FunctionScanner
 				Metadata = new ReflectionMetadata()
 				{
 					Name = func.Name,
-					AssemblyName = func.GetType().Assembly.GetName().Name,
-					FullName = func.GetType().FullName,
+					AssemblyName = func.Module.Assembly.GetName().Name,
+					FullName = $"{type.FullName}.{func.Name}",
 					IsAbstract = func.IsAbstract,
-					IsInternal = func.GetType().IsNotPublic,
+					IsInternal = func.ReturnType.IsNotPublic,
 					IsPrivate = func.IsPrivate,
 					IsPublic = func.IsPublic,
-					IsSealed = func.GetType().IsSealed,
+					IsSealed = func is { IsFinal: true, IsVirtual: true },
 					IsStatic = func.IsStatic,
-					Namespace = func.GetType().Namespace,
-					ObjectType = func.GetType()
+					Namespace = type.Namespace,
+					ObjectType = func.ReturnType
 				}
 			};
 
@@ -52,19 +52,26 @@ public static class FunctionScanner
 		return functions;
 	}
 
-	private static Delegate CreateDynamicDelegate(MethodInfo methodInfo, object? target = null)
+	private static Delegate? CreateDynamicDelegate(MethodInfo methodInfo, object? target = null)
 	{
-		var types = methodInfo.GetParameters()
-			.Select(paramInfo => paramInfo.ParameterType)
-			.ToList();
+		try
+		{
+			var types = methodInfo.GetParameters()
+				.Select(paramInfo => paramInfo.ParameterType)
+				.ToList();
 
-		if (!methodInfo.IsStatic && target == null)
-			types.Insert(0, methodInfo.DeclaringType!);
+			if (!methodInfo.IsStatic && target == null)
+				types.Insert(0, methodInfo.DeclaringType!);
 
-		types.Add(methodInfo.ReturnType);
-		var delegateType = Expression.GetDelegateType([.. types]);
+			types.Add(methodInfo.ReturnType);
+			var delegateType = Expression.GetDelegateType([.. types]);
 
-		return methodInfo.CreateDelegate(delegateType, target);
+			return methodInfo.CreateDelegate(delegateType, target);
+		}
+		catch
+		{
+			return null;
+		}
 	}
 
 	private static bool IsAsync(MethodInfo info)

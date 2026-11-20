@@ -1,9 +1,8 @@
 using System.Reflection;
-using System.Runtime.InteropServices;
+using System.Text.Json.Serialization;
 
 namespace SharpHost.Reflection;
 
-[StructLayout(LayoutKind.Sequential)]
 public struct ReflectionMetadata
 {
 	public string? Name = string.Empty;
@@ -18,19 +17,24 @@ public struct ReflectionMetadata
 	public bool IsSealed = false;
 	public bool IsStatic = false;
 
-	public Type? ObjectType = null;
+	[JsonIgnore] public Type? ObjectType = null;
+
+	public string? ObjectTypeName => ObjectType?.FullName ?? ObjectType?.Name;
 
 	public ReflectionMetadata()
 	{
 	}
 }
 
-[StructLayout(LayoutKind.Sequential)]
 public struct Parameter
 {
 	public string? Name = string.Empty;
 
-	public Type? ParamType = null;
+	[JsonIgnore] public Type? ParamType = null;
+
+	public string? ParamTypeName => ParamType?.FullName ?? ParamType?.Name;
+
+	public bool HasDefaultValue = false;
 	public object? DefaultValue = null;
 
 	public bool IsOptional = false;
@@ -40,14 +44,13 @@ public struct Parameter
 
 	public List<ReflectedAttribute> Attributes = [];
 
-	public ParameterInfo? ParameterInfo = null;
+	[JsonIgnore] public ParameterInfo? ParameterInfo = null;
 
 	public Parameter()
 	{
 	}
 }
 
-[StructLayout(LayoutKind.Sequential)]
 public struct ReflectedAttribute
 {
 	public ReflectionMetadata Metadata = new();
@@ -55,14 +58,13 @@ public struct ReflectedAttribute
 	public List<object?> ConstructorArguments = [];
 	public Dictionary<string, object?> NamedArguments = [];
 
-	public Attribute? Instance = null;
+	[JsonIgnore] public Attribute? Instance = null;
 
 	public ReflectedAttribute()
 	{
 	}
 }
 
-[StructLayout(LayoutKind.Sequential)]
 public struct ReflectedConstructor
 {
 	public ReflectionMetadata Metadata = new();
@@ -70,23 +72,27 @@ public struct ReflectedConstructor
 	public List<Parameter> Parameters = [];
 	public List<ReflectedAttribute> Attributes = [];
 
-	public ConstructorInfo? ConstructorInfo = null;
+	[JsonIgnore] public ConstructorInfo? ConstructorInfo = null;
 
 	public ReflectedConstructor()
 	{
 	}
 }
 
-[StructLayout(LayoutKind.Sequential)]
 public struct ReflectedFunction
 {
 	public ReflectionMetadata Metadata = new();
 
-	public Type? ReturnType = null;
+	[JsonIgnore] public Type? ReturnType = null;
+
+	public string? ReturnTypeName => ReturnType?.FullName ?? ReturnType?.Name;
 
 	public List<Parameter> Parameters = [];
 	public List<ReflectedAttribute> Attributes = [];
-	public List<Type> GenericArguments = [];
+
+	[JsonIgnore] public List<Type> GenericArguments = [];
+
+	public List<string> GenericArgumentTypeNames => GenericArguments.ConvertAll(type => type.FullName ?? type.Name);
 
 	public bool IsStatic = false;
 	public bool IsAsync = false;
@@ -95,8 +101,9 @@ public struct ReflectedFunction
 	public bool IsOverride = false;
 	public bool IsGeneric = false;
 
-	public MethodInfo? Info = null;
-	public Delegate? CompiledDelegate = null;
+	[JsonIgnore] public MethodInfo? Info = null;
+
+	[JsonIgnore] public Delegate? CompiledDelegate = null;
 
 	public ReflectedFunction()
 	{
@@ -109,48 +116,53 @@ public struct ReflectedField
 
 	public List<ReflectedAttribute> Attributes = [];
 
-	public Type? FieldType = null;
+	[JsonIgnore] public Type? FieldType = null;
+
+	public string? FieldTypeName => FieldType?.FullName ?? FieldType?.Name;
 
 	public bool IsStatic = false;
 	public bool IsConst = false;
 
-	public FieldInfo? FieldInfo = null;
+	[JsonIgnore] public FieldInfo? FieldInfo = null;
 
 	public ReflectedField()
 	{
 	}
 }
 
-[StructLayout(LayoutKind.Sequential)]
 public struct ReflectedProperty
 {
 	public ReflectionMetadata Metadata = new();
 
 	public List<ReflectedAttribute> Attributes = [];
 
-	public Type? PropertyType = null;
+	[JsonIgnore] public Type? PropertyType = null;
+
+	public string? PropertyTypeName => PropertyType?.FullName ?? PropertyType?.Name;
 
 	public bool CanRead = false;
 	public bool CanWrite = false;
 	public bool IsStatic = false;
 
-	public PropertyInfo? PropertyInfo = null;
+	[JsonIgnore] public PropertyInfo? PropertyInfo = null;
 
 	public ReflectedProperty()
 	{
 	}
 }
 
-[StructLayout(LayoutKind.Sequential)]
 public struct ReflectedStruct
 {
 	public ReflectionMetadata Metadata = new();
 
-	public Type? BaseType = null;
+	[JsonIgnore] public Type? BaseType = null;
 
-	public List<Type> Interfaces = [];
+	[JsonIgnore] public List<Type> Interfaces = [];
+
+	public string? BaseTypeName => BaseType?.FullName ?? BaseType?.Name;
+	public List<string> InterfaceTypeNames => Interfaces.ConvertAll(type => type.FullName ?? type.Name);
+
 	public List<ReflectedConstructor> Constructors = [];
-
 	public List<ReflectedAttribute> Attributes = [];
 
 	public List<ReflectedClass> Classes = [];
@@ -165,7 +177,6 @@ public struct ReflectedStruct
 	}
 }
 
-[StructLayout(LayoutKind.Sequential)]
 public struct Enumerator
 {
 	public string? Member = string.Empty;
@@ -176,7 +187,6 @@ public struct Enumerator
 	}
 }
 
-[StructLayout(LayoutKind.Sequential)]
 public struct ReflectedEnum
 {
 	public ReflectionMetadata Metadata = new();
@@ -187,16 +197,18 @@ public struct ReflectedEnum
 	}
 }
 
-[StructLayout(LayoutKind.Sequential)]
 public struct ReflectedClass
 {
 	public ReflectionMetadata Metadata = new();
 
-	public Type? BaseType = null;
+	[JsonIgnore] public Type? BaseType = null;
 
-	public List<Type> Interfaces = [];
+	[JsonIgnore] public List<Type> Interfaces = [];
+
+	public string? BaseTypeName => BaseType?.FullName ?? BaseType?.Name;
+	public List<string> InterfaceTypeNames => Interfaces.ConvertAll(type => type.FullName ?? type.Name);
+
 	public List<ReflectedConstructor> Constructors = [];
-
 	public List<ReflectedAttribute> Attributes = [];
 
 	public List<ReflectedFunction> Functions = [];
@@ -211,7 +223,6 @@ public struct ReflectedClass
 	}
 }
 
-[StructLayout(LayoutKind.Sequential)]
 public struct ReflectedAssembly
 {
 	public ReflectionMetadata Metadata = new();

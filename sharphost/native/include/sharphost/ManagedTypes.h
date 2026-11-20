@@ -6,7 +6,6 @@
 namespace sharphost
 {
 	struct Class;
-	struct Struct;
 
 	struct ReflectionMetadata
 	{
@@ -157,8 +156,25 @@ namespace sharphost
 		std::vector<Enum>   enums;
 	};
 
-	struct AssemblyContextMetadata
-	{
+	class AssemblyContext;
 
+	class AssemblyContextMetadata
+	{
+	public:
+		[[nodiscard]] Assembly findAssembly(const std::string& name) const;
+
+		[[nodiscard]] std::vector<Assembly>    getAssemblies() const;
+		[[nodiscard]] std::vector<std::string> getAssemblyNames() const;
+
+	protected:
+		friend class AssemblyContext;
+
+		void addAssembly(Assembly assembly);
+		void removeAssembly(Assembly& assembly);
+
+		void resetMetadata();
+
+	private:
+		std::unordered_map<std::string, Assembly> m_assemblies;
 	};
 } // namespace sharphost

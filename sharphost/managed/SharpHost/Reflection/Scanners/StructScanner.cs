@@ -65,7 +65,7 @@ public static class StructScanner
 			{
 				Name = type.Name,
 				Namespace = type.Namespace,
-				AssemblyName = type.Assembly.FullName,
+				AssemblyName = type.Assembly.GetName().Name,
 				FullName = type.FullName,
 				IsAbstract = type.IsAbstract,
 				IsInternal = type.IsNotPublic,

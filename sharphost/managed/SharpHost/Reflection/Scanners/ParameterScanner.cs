@@ -14,6 +14,7 @@ public static class ParameterScanner
 			{
 				Attributes = paramAttributes,
 				DefaultValue = param.DefaultValue,
+                HasDefaultValue = param.HasDefaultValue,
 				IsOptional = param.IsOptional,
 				IsOut = param.IsOut,
 				IsIn = param.IsIn,
