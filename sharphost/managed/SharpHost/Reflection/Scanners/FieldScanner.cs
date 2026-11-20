@@ -22,7 +22,7 @@ public static class FieldScanner
 				FieldType = field.FieldType,
 				IsConst = field is { IsLiteral: true, IsInitOnly: false },
 				IsStatic = field.IsStatic,
-				MetaData = new ReflectionMetaData()
+				Metadata = new ReflectionMetadata()
 				{
 					AssemblyName = field.FieldType.Assembly.GetName().Name,
 					Name = field.Name,

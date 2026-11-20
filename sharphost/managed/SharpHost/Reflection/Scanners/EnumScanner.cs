@@ -14,9 +14,9 @@ public static class EnumScanner
 			if (!type.IsEnum) continue;
 			
 			var reflectedEnum = GetReflectedEnum(type);
-            if (reflectedEnum == null) continue;
+            if (!reflectedEnum.HasValue) continue;
             
-            reflectedEnums.Add(reflectedEnum);
+            reflectedEnums.Add(reflectedEnum.Value);
 		}
 
 		return reflectedEnums;
@@ -46,7 +46,7 @@ public static class EnumScanner
 		var reflectedEnum = new ReflectedEnum()
 		{
 			Enumerators = enumerators,
-			MetaData = new ReflectionMetaData()
+			Metadata = new ReflectionMetadata()
 			{
 				Name = enumType.Name,
 				Namespace = enumType.Namespace,

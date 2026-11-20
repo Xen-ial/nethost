@@ -7,8 +7,8 @@ int main()
 {
 	sharphost::Host host("SharpHost.dll");
 
-	auto sharpHost   = host.getSharpHost();
-	auto managedHost = sharpHost.getManagedHost();
+	auto testContext = host.createAssemblyContext("TestContext");
+	testContext.loadAssembly("");
 
 	return 0;
 }

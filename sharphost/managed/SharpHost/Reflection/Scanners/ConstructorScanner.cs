@@ -12,7 +12,7 @@ public static class ConstructorScanner
 			{
 				Attributes = attributes,
 				ConstructorInfo = constructor,
-				MetaData = new ReflectionMetaData()
+				Metadata = new ReflectionMetadata()
 				{
 					Name = constructor.Name,
 					AssemblyName = type.Assembly.FullName,
@@ -23,7 +23,7 @@ public static class ConstructorScanner
 					IsStatic = constructor.IsStatic,
 					IsPublic = constructor.IsPublic,
 					IsSealed = type.IsSealed,
-                    ObjectType = type
+					ObjectType = type
 				},
 				Parameters = ParameterScanner.GetParameters(constructor.GetParameters())
 			};

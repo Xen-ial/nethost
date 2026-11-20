@@ -16,8 +16,8 @@ public static class ClassScanner
 			if (!type.IsClass) continue;
 			var reflectedClass = GetClass(classType, isDeepScan);
 
-			if (reflectedClass == null) continue;
-			classes.Add(reflectedClass);
+			if (!reflectedClass.HasValue) continue;
+			classes.Add(reflectedClass.Value);
 		}
 
 		return classes;
@@ -39,8 +39,8 @@ public static class ClassScanner
 			if (isDeepScan)
 			{
 				var nestedRefClass = GetClass(nestedType, isDeepScan: true);
-				if (nestedRefClass != null)
-					refClass.Classes.Add(nestedRefClass);
+				if (nestedRefClass.HasValue)
+					refClass.Classes.Add(nestedRefClass.Value);
 
 				continue;
 			}
@@ -55,7 +55,7 @@ public static class ClassScanner
 	{
 		var reflectedClass = new ReflectedClass()
 		{
-			MetaData = new ReflectionMetaData()
+			Metadata = new ReflectionMetadata()
 			{
 				Name = type.Name,
 				Namespace = type.Namespace,
@@ -77,7 +77,7 @@ public static class ClassScanner
 			Functions = FunctionScanner.GetFunctions(type),
 			Interfaces = [.. type.GetInterfaces()],
 			Properties = PropertyScanner.GetProperties(type),
-            Structs = StructScanner.GetStructs(type, isDeepScan: true)
+			Structs = StructScanner.GetStructs(type, isDeepScan: true)
 		};
 
 		return reflectedClass;

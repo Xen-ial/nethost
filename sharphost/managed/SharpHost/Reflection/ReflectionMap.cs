@@ -18,7 +18,7 @@ public class ReflectionMap
 		foreach (var assembly in context.Assemblies)
 		{
 			var assemblyName = assembly.GetName();
-			var assemblyMetaData = new ReflectionMetaData()
+			var assemblyMetadata = new ReflectionMetadata()
 			{
 				FullName = assemblyName.FullName,
 				AssemblyName = assemblyName.Name,
@@ -34,33 +34,33 @@ public class ReflectionMap
 				if (type.IsClass)
 				{
 					var reflectedClass = ClassScanner.GetClass(type, isDeepScan: true);
-					if (reflectedClass == null) continue;
+					if (!reflectedClass.HasValue) continue;
 
-					reflectedClasses.Add(reflectedClass);
+					reflectedClasses.Add(reflectedClass.Value);
 					continue;
 				}
 
 				if (type.IsEnum)
 				{
 					var reflectedEnum = EnumScanner.GetReflectedEnum(type);
-					if (reflectedEnum == null) continue;
+					if (!reflectedEnum.HasValue) continue;
 
-					reflectedEnums.Add(reflectedEnum);
+					reflectedEnums.Add(reflectedEnum.Value);
 					continue;
 				}
 
 				if (StructScanner.IsStruct(type))
 				{
 					var reflectedStruct = StructScanner.GetStruct(type);
-					if (reflectedStruct == null) continue;
+					if (!reflectedStruct.HasValue) continue;
 
-					reflectedStructs.Add(reflectedStruct);
+					reflectedStructs.Add(reflectedStruct.Value);
 				}
 			}
 
 			var reflectedAssembly = new ReflectedAssembly()
 			{
-				MetaData = assemblyMetaData,
+				Metadata = assemblyMetadata,
 				Classes = reflectedClasses,
 				Enums = reflectedEnums,
 				Structs = reflectedStructs

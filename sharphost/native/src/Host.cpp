@@ -1,3 +1,4 @@
+#include <sharphost/AssemblyContext.h>
 #include <sharphost/Host.h>
 
 #include <nethost/Log.h>
@@ -29,5 +30,11 @@ namespace sharphost
 
 		m_sharpHostLib.emplace(m_appHost);
 		if (!m_sharpHostLib.has_value()) return;
+	}
+
+	AssemblyContext Host::createAssemblyContext(std::string contextName)
+	{
+		AssemblyContext context(m_sharpHostLib.value(), std::move(contextName));
+		return std::move(context);
 	}
 } // namespace sharphost

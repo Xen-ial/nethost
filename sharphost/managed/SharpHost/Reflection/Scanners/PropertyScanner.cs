@@ -17,7 +17,7 @@ public static class PropertyScanner
 				CanRead = prop.CanRead,
 				CanWrite = prop.CanWrite,
 				IsStatic = prop.GetAccessors(nonPublic: true).Any(acc => acc.IsStatic),
-				MetaData = new ReflectionMetaData()
+				Metadata = new ReflectionMetadata()
 				{
 					Name = prop.Name,
 					AssemblyName = prop.GetType().Assembly.FullName,

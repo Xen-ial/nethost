@@ -1,8 +1,10 @@
 using System.Reflection;
+using System.Runtime.InteropServices;
 
 namespace SharpHost.Reflection;
 
-public class ReflectionMetaData
+[StructLayout(LayoutKind.Sequential)]
+public struct ReflectionMetadata
 {
 	public string? Name = string.Empty;
 	public string? Namespace = string.Empty;
@@ -17,9 +19,14 @@ public class ReflectionMetaData
 	public bool IsStatic = false;
 
 	public Type? ObjectType = null;
+
+	public ReflectionMetadata()
+	{
+	}
 }
 
-public class Parameter
+[StructLayout(LayoutKind.Sequential)]
+public struct Parameter
 {
 	public string? Name = string.Empty;
 
@@ -34,31 +41,46 @@ public class Parameter
 	public List<ReflectedAttribute> Attributes = [];
 
 	public ParameterInfo? ParameterInfo = null;
+
+	public Parameter()
+	{
+	}
 }
 
-public class ReflectedAttribute
+[StructLayout(LayoutKind.Sequential)]
+public struct ReflectedAttribute
 {
-	public ReflectionMetaData MetaData = new();
+	public ReflectionMetadata Metadata = new();
 
 	public List<object?> ConstructorArguments = [];
 	public Dictionary<string, object?> NamedArguments = [];
 
 	public Attribute? Instance = null;
+
+	public ReflectedAttribute()
+	{
+	}
 }
 
-public class ReflectedConstructor
+[StructLayout(LayoutKind.Sequential)]
+public struct ReflectedConstructor
 {
-	public ReflectionMetaData MetaData = new();
+	public ReflectionMetadata Metadata = new();
 
 	public List<Parameter> Parameters = [];
 	public List<ReflectedAttribute> Attributes = [];
 
 	public ConstructorInfo? ConstructorInfo = null;
+
+	public ReflectedConstructor()
+	{
+	}
 }
 
-public class ReflectedFunction
+[StructLayout(LayoutKind.Sequential)]
+public struct ReflectedFunction
 {
-	public ReflectionMetaData MetaData = new();
+	public ReflectionMetadata Metadata = new();
 
 	public Type? ReturnType = null;
 
@@ -75,11 +97,15 @@ public class ReflectedFunction
 
 	public MethodInfo? Info = null;
 	public Delegate? CompiledDelegate = null;
+
+	public ReflectedFunction()
+	{
+	}
 }
 
-public class ReflectedField
+public struct ReflectedField
 {
-	public ReflectionMetaData MetaData = new();
+	public ReflectionMetadata Metadata = new();
 
 	public List<ReflectedAttribute> Attributes = [];
 
@@ -89,11 +115,16 @@ public class ReflectedField
 	public bool IsConst = false;
 
 	public FieldInfo? FieldInfo = null;
+
+	public ReflectedField()
+	{
+	}
 }
 
-public class ReflectedProperty
+[StructLayout(LayoutKind.Sequential)]
+public struct ReflectedProperty
 {
-	public ReflectionMetaData MetaData = new();
+	public ReflectionMetadata Metadata = new();
 
 	public List<ReflectedAttribute> Attributes = [];
 
@@ -104,11 +135,16 @@ public class ReflectedProperty
 	public bool IsStatic = false;
 
 	public PropertyInfo? PropertyInfo = null;
+
+	public ReflectedProperty()
+	{
+	}
 }
 
-public class ReflectedStruct
+[StructLayout(LayoutKind.Sequential)]
+public struct ReflectedStruct
 {
-	public ReflectionMetaData MetaData = new();
+	public ReflectionMetadata Metadata = new();
 
 	public Type? BaseType = null;
 
@@ -123,23 +159,38 @@ public class ReflectedStruct
 	public List<ReflectedStruct> Structs = [];
 	public List<ReflectedFunction> Functions = [];
 	public List<ReflectedEnum> Enums = [];
+
+	public ReflectedStruct()
+	{
+	}
 }
 
-public class Enumerator
+[StructLayout(LayoutKind.Sequential)]
+public struct Enumerator
 {
 	public string? Member = string.Empty;
 	public object? Value = null;
+
+	public Enumerator()
+	{
+	}
 }
 
-public class ReflectedEnum
+[StructLayout(LayoutKind.Sequential)]
+public struct ReflectedEnum
 {
-	public ReflectionMetaData MetaData = new();
+	public ReflectionMetadata Metadata = new();
 	public List<Enumerator> Enumerators = [];
+
+	public ReflectedEnum()
+	{
+	}
 }
 
-public class ReflectedClass
+[StructLayout(LayoutKind.Sequential)]
+public struct ReflectedClass
 {
-	public ReflectionMetaData MetaData = new();
+	public ReflectionMetadata Metadata = new();
 
 	public Type? BaseType = null;
 
@@ -154,15 +205,24 @@ public class ReflectedClass
 	public List<ReflectedEnum> Enums = [];
 	public List<ReflectedStruct> Structs = [];
 	public List<ReflectedClass> Classes = [];
+
+	public ReflectedClass()
+	{
+	}
 }
 
-public class ReflectedAssembly
+[StructLayout(LayoutKind.Sequential)]
+public struct ReflectedAssembly
 {
-	public ReflectionMetaData MetaData = new();
+	public ReflectionMetadata Metadata = new();
 
 	public List<ReflectedClass> Classes = [];
 	public List<ReflectedStruct> Structs = [];
 	public List<ReflectedEnum> Enums = [];
+
+	public ReflectedAssembly()
+	{
+	}
 
 	public void Reset()
 	{

@@ -30,7 +30,7 @@ public static class FunctionScanner
 				IsVirtual = func.IsVirtual,
 				ReturnType = func.ReturnType,
 				Parameters = ParameterScanner.GetParameters(func.GetParameters()),
-				MetaData = new ReflectionMetaData()
+				Metadata = new ReflectionMetadata()
 				{
 					Name = func.Name,
 					AssemblyName = func.GetType().Assembly.GetName().Name,

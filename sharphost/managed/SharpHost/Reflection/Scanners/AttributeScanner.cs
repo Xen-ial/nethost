@@ -40,7 +40,7 @@ public static class AttributeScanner
 
 			var reflectedAttr = new ReflectedAttribute()
 			{
-				MetaData = new ReflectionMetaData()
+				Metadata = new ReflectionMetadata()
 				{
 					Name = attrType.Name,
 					AssemblyName = attrType.Assembly.FullName,

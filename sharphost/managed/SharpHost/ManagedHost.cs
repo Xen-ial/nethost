@@ -105,7 +105,7 @@ public class ManagedHost
 	[UnmanagedCallersOnly]
 	public static void RebuildMaps()
 	{
-        ReflectionMapManager.RebuildMaps();
+		ReflectionMapManager.RebuildMaps();
 	}
 
 	[UnmanagedCallersOnly]
@@ -117,12 +117,12 @@ public class ManagedHost
 			{
 				foreach (var reflectedClass in assembly.Classes)
 				{
-					var metaData = reflectedClass.MetaData;
-					Console.WriteLine($"FullName: {metaData.FullName}\nClassName: {metaData.Name}\nNameSpace: {metaData.Namespace}");
+					var metadata = reflectedClass.Metadata;
+					Console.WriteLine($"FullName: {metadata.FullName}\nClassName: {metadata.Name}\nNameSpace: {metadata.Namespace}");
 					foreach (var function in reflectedClass.Functions)
 					{
-						var funcMetaData = function.MetaData;
-						Console.WriteLine($"FuncName: {funcMetaData.Name}");
+						var funcMetadata = function.Metadata;
+						Console.WriteLine($"FuncName: {funcMetadata.Name}");
 					}
 				}
 			}

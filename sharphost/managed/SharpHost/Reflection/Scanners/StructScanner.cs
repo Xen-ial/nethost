@@ -16,8 +16,8 @@ public static class StructScanner
             if (!IsStruct(type)) continue;
             var reflectedStruct = GetStruct(structType, isDeepScan);
             
-            if (reflectedStruct == null) continue;
-            structs.Add(reflectedStruct);
+            if (!reflectedStruct.HasValue) continue;
+            structs.Add(reflectedStruct.Value);
 		}
 
 		return structs;
@@ -37,8 +37,8 @@ public static class StructScanner
 			if (isDeepScan)
 			{
 				var nestedRefStruct = GetStruct(nestedType, isDeepScan: true);
-				if (nestedRefStruct != null)
-					refStruct.Structs.Add(nestedRefStruct);
+				if (nestedRefStruct.HasValue)
+					refStruct.Structs.Add(nestedRefStruct.Value);
 
 				continue;
 			}
@@ -61,7 +61,7 @@ public static class StructScanner
 			Fields = FieldScanner.GetFields(type),
 			Functions = FunctionScanner.GetFunctions(type),
 			Interfaces = [.. type.GetInterfaces()],
-			MetaData = new ReflectionMetaData()
+			Metadata = new ReflectionMetadata()
 			{
 				Name = type.Name,
 				Namespace = type.Namespace,
